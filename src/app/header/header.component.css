@@ -1,46 +1,63 @@
-.nav {
+/* Navbar */
+.navbar {
     display: flex;
     justify-content: space-between;
-}
-
-.nav h1 {
-    color: blueviolet;
-    margin: 0;
-    font-size: 40px;
-}
-
-.nav ul {
-    display: inline-flex;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-.nav li{
-    padding-left: 80px;
-    padding-top:15px;
-}
-.nav lis a{
-    text-decoration: none;
-    color: blueviolet;
-}
-.nav .nav-search{
-    margin-top: 10px;
-    flex:1;
+    align-items: center;
+    background-color: #4f3809;
+    color: white;
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  nav {
     display: flex;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-.nav .nav-search input{
-    flex: 1;
-    color:blueviolet;
-    border: 1px solis blueviolet;
-    height: 50px;
-    border-right: 10px;
-}
-.nav .nav-search button{
-    
-    color:blueviolet;
-    border: 1px solis blueviolet;
-    height: 50px;
-    border-right: 0px;
-}
+    align-items: center;
+    gap: 15px;
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .icon {
+    margin-right: 5px;
+  }
+  
+  /* Search Bar */
+  .search-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    flex-grow: 1;
+    max-width: 400px;
+  }
+  
+  .search-container input[type="text"] {
+    padding: 6px 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+  }
+  
+  .search-container .search-btn {
+    padding: 6px 12px;
+    background-color: #ffae00;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  
