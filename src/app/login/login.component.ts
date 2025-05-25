@@ -1,21 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
+  authService = inject(AuthService)
+  router = inject(Router);
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
@@ -23,8 +28,14 @@ export class LoginComponent {
     this.submitted = true;
     if (this.loginForm.valid) {
       // Replace this with your authentication logic
-      console.log('Login successful', this.loginForm.value);
-      alert('Login Successful');
+      this.authService.login(this.loginForm.value)
+        .subscribe((result: any) => {
+          console.log(result)
+          if (this.authService.isLoggedIn()) {
+            alert('Login Successful');
+            this.router.navigate(['/home']);
+          }
+        });
     }
   }
 }

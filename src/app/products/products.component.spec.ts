@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SellerAuthComponent } from './products.component';
+import { SellerAuthComponent } from './SellerAuthComponent';
 
 describe('SellerAuthComponent', () => {
   let component: SellerAuthComponent;

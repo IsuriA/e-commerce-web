@@ -10,13 +10,19 @@ import { Component } from '@angular/core';
 export class BrandsComponent {
 
   brands = [
-    { name: 'Philips', logo: 'assets/brands/philips.png' },
-    { name: 'Samsung', logo: 'assets/brands/samsung.png' },
-    { name: 'Panasonic', logo: 'assets/brands/panasonic.png' },
-    { name: 'LG', logo: 'assets/brands/lg.png' },
-    { name: 'Sony', logo: 'assets/brands/sony.png' },
-    { name: 'Siemens', logo: 'assets/brands/siemens.png' },
-    { name: 'Dell', logo: 'assets/brands/dell.png' },
-    { name: 'Huawei', logo: 'assets/brands/huawei.png' }
+    { name: '', logo: 'images/sony.png' },
+    { name: '', logo: 'images/samsung.png' },
+    { name: '', logo: 'images/panasonic.jpg' },
+    { name: '', logo: 'images/lg.png' },
+    { name: '', logo: 'images/smeg.png' },
+    { name: '', logo: 'images/dell.png' },
+    { name: '', logo: 'images/lenovo.png' },
+    { name: '', logo: 'images/huawei.png' },
+    { name: '', logo: 'images/hitachi.png' },
+    { name: '', logo: 'images/philips.png' },
+    { name: '', logo: 'images/ghd.png' },
+    { name: '', logo: 'images/lange.png' },
+    { name: '', logo: 'images/tcl.png' },
+    { name: '', logo: 'images/jbl.png' }
   ];
 }

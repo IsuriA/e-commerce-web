@@ -1,29 +1,30 @@
-<p>login works!</p>
 <div class="login-container">
-    <div class="login-box">
-      <h2 >Tech Lanka Admin Login</h2>
-  
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="email" >Email</label>
-          <input type="email" id="email" formControlName="email" />
-          <!-- <small *ngIf="submitted && loginForm.controls.email.errors">
+  <div class="login-box">
+    <h2>Tech Lanka Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" />
+        <!-- <small *ngIf="submitted && loginForm.controls.email.errors">
             <span *ngIf="loginForm.controls.email.errors.required">Email is required.</span>
             <span *ngIf="loginForm.controls.email.errors.email">Enter a valid email.</span>
           </small> -->
-        </div>
-  
-        <div class="form-group">
-          <label for="password" >Password</label>
-          <input type="password" id="password" formControlName="password" />
-          <!-- <small *ngIf="submitted && loginForm.controls.password.errors">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" />
+        <!-- <small *ngIf="submitted && loginForm.controls.password.errors">
             <span *ngIf="loginForm.controls.password.errors.required">Password is required.</span>
             <span *ngIf="loginForm.controls.password.errors.minlength">Min 6 characters.</span>
           </small> -->
-        </div>
-  
-        <button type="submit" >Sign In</button>
-      </form>
-    </div>
+      </div>
+      <p class="register-link">
+        New user? <a href="register">Create an account</a>
+      </p>
+
+      <button>Sign In</button>
+    </form>
   </div>
-  
+</div>
