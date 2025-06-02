@@ -60,4 +60,7 @@
     font-size: 1rem;
   }
   
+  .logout-button {
+    cursor: pointer;
+  }
   

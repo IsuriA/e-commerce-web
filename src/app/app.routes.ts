@@ -1,26 +1,45 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { SellerAuthComponent } from './products/SellerAuthComponent';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-import { AboutUsComponent } from './about-us/about-us.component';
-import { BrandsComponent } from './brands/brands.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { LoginComponent } from './login/login.component';
-import { CartComponent } from './cart/cart.component';
-import { RegisterComponent } from './register/register.component';
-
-
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'home', component: HomeComponent },
-    { path: 'brands', component: BrandsComponent },
-    { path: 'seller', component: SellerAuthComponent },
-    { path: 'contact-us', component: ContactUsComponent },
-    { path: 'about-us', component: AboutUsComponent },
-    { path: 'admin-dashboard', component: AdminDashboardComponent },
-    { path: 'signin', component: LoginComponent },
-    { path: 'cart', component: CartComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent }
+    { 
+        path: '',
+        redirectTo: '/home', 
+        pathMatch: 'full'
+    },
+    { 
+        path: 'home', 
+        loadComponent: () => import('./home/home.component').then(mod => mod.HomeComponent) 
+    },
+    { 
+        path: 'brands', 
+        loadComponent: () => import('./brands/brands.component').then(mod => mod.BrandsComponent) 
+    },
+    { 
+        path: 'seller', 
+        loadComponent: () => import('./products/SellerAuthComponent').then(mod => mod.SellerAuthComponent) 
+    },
+    { 
+        path: 'contact-us', 
+        loadComponent: () => import('./contact-us/contact-us.component').then(mod => mod.ContactUsComponent) 
+    },
+    { 
+        path: 'about-us', 
+        loadComponent: () => import('./about-us/about-us.component').then(mod => mod.AboutUsComponent) 
+    },
+    { 
+        path: 'admin-dashboard', 
+        loadComponent: () => import('./admin-dashboard/admin-dashboard.component').then(mod => mod.AdminDashboardComponent) 
+    },
+    { 
+        path: 'cart', 
+        loadComponent: () => import('./cart/cart.component').then(mod => mod.CartComponent) 
+    },
+    { 
+        path: 'signin', 
+        loadComponent: () => import('./login/login.component').then(mod => mod.LoginComponent) 
+    },
+    { 
+        path: 'register', 
+        loadComponent: () => import('./register/register.component').then(mod => mod.RegisterComponent) 
+    }
 ];

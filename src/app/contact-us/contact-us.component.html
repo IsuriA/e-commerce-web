@@ -10,15 +10,17 @@
         <p><strong >Message:</strong>We provide wide range of  high-quality electrica goods to meet all your home and business needs. Our friendly and experienced team is here to help you find exactly what you're looking for!</p>
       </div>
   
-      <form class="contact-form">
+      <form [formGroup]="contactUsForm" class="contact-form" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="userId" />
+
         <label for="name" >Your Name</label>
-        <input type="text" id="name" name="name" required />
+        <input type="text" formControlName="name" required readonly />
   
         <label for="email" >Your Email</label>
-        <input type="email" id="email" name="email" required />
+        <input type="email" formControlName="email" required />
   
         <label for="message" >Your Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+        <textarea formControlName="message" rows="5" required></textarea>
   
         <button type="submit" >Send Message</button>
       </form>

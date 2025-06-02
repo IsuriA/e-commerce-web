@@ -13,13 +13,7 @@
     <a href="brands">Brands</a>
     <a href="about-us">About Us</a>
     <a href="contact-us">Contact Us</a>
-    <a href="cart"><span class="icon">🛒</span>My Cart</a>
-    <a href="signin"><span class="icon">👤</span>Sign In</a>
+    <a *ngIf="!user" href="signin"><i class="icon">👤</i>Sign In</a>
+    <span *ngIf="user" (click)="logout()" class="logout-button"><i class="icon">👤</i> Logout({{ user?.username }})</span>
   </nav>
 </header>
-
-<!-- 
-
-    <a *ngIf="!loggedInUser" href="signin"><span class="icon">👤</span>Sign In</a>
-    <span *ngIf="loggedInUser"><i class="icon">👤</i> {{ loggedInUser.Username }}</span>
--->
