@@ -26,18 +26,19 @@ export class AuthService {
       }));
   }
 
-  getAuthToken() : string | null {
+  getAuthToken(): string | null {
     const authTokenJson = localStorage.getItem('authToken');
-    if(!authTokenJson) {
+    if (!authTokenJson) {
       return "";
     }
 
     return authTokenJson;
-  }
+  } 
 
   logout() {
-    if(this.isLoggedIn()) {
-      localStorage.removeItem('authUser');
+    if (this.isLoggedIn()) {
+      this.httpClient.post(`${this.baseUrl}/logout`, {})
+        .subscribe(result => localStorage.removeItem('authUser'));
     }
   }
 

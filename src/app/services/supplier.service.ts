@@ -4,15 +4,16 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class SupplierService {
 
   httpClient = inject(HttpClient);
-  baseUrl = 'https://localhost:7256/api/user';
+  baseUrl = 'https://localhost:7256/api/product';
   
   constructor() { }
 
-  addUser(data: any) {
-    return this.httpClient.post(`${this.baseUrl}/register`, data)
+  addSupplier(data: any) {
+    return this.httpClient.post(`${this.baseUrl}`, data)
       .pipe();
   }
 }
+

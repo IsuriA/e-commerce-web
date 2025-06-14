@@ -1,0 +1,51 @@
+<div class="debtor-container">
+  <h2>Debtors Follow-up</h2>
+
+  <!-- Filter Section -->
+  <div class="filters">
+    <input
+      type="text"
+      placeholder="Search by Debtor ID"
+      [(ngModel)]="filterDebtorId"
+      (input)="applyFilters()"
+    />
+    <input
+      type="date"
+      [(ngModel)]="filterDueDate"
+      (change)="applyFilters()"
+    />
+  </div>
+
+  <!-- Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Debtor ID</th>
+        <th>Name</th>
+        <th>Purchase Date</th>
+        <th>Total Amount</th>
+        <th>Advanced Payment</th>
+        <th>Due Date</th>
+        <th>Paid Amount</th>
+        <th>Have to Pay</th>
+      </tr>
+
+      
+    </thead>
+    <tbody>
+      <tr *ngFor="let debtor of filteredDebtors">
+        <td>{{ debtor.debtorId }}</td>
+        <td>{{ debtor.name }}</td>
+        <td>{{ debtor.purchaseDate | date }}</td>
+        <td>Rs. {{ debtor.totalAmount }}</td>
+        <td>Rs. {{ debtor.advancedPayment }}</td>
+        <td>{{ debtor.dueDate | date }}</td>
+        <td>Rs. {{ debtor.paidAmount }}</td>
+        <td>
+          Rs.
+          {{ debtor.totalAmount - debtor.advancedPayment - debtor.paidAmount }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -67,3 +67,13 @@
     background-color: #e88b00;
   }
   
+  .add-new-button {
+    
+    background-color: #ff9900;
+    border: none;
+    padding: 15px 20px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    float: right;
+  }

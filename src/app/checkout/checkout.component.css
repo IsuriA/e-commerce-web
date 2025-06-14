@@ -1,0 +1,78 @@
+.cart-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.cart-table th, .cart-table td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkout-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+fieldset {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+fieldset legend {
+  font-weight: bold;
+}
+
+button[type="submit"] {
+  padding: 0.8rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:disabled {
+  background-color: #888;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+.checkout-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }

@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Manage Products</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="ProductManagementForm">
+        <input type="text" formControlName="name" placeholder="Product Name" required />
+        <input type="text" formControlName="quantity" placeholder="Quantity" required />
+        <input type="text" formControlName="price" placeholder="Price" required />
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category" required>
+                @for (category of productCategories; track category) {
+                <mat-option [value]="category">{{category.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <input type="text" formControlName="description" placeholder="Description" required />
+        <input type="file" (change)="onFileChange($event)" />
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="addProduct()">Add Product</button>
+</mat-dialog-actions>

@@ -5,6 +5,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './services/auth/auth.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const customInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
 
@@ -13,7 +14,7 @@ export const customInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandler
 
       if (token) {
         req = req.clone({
-            setHeaders: { Authorization: `Bearer ${token}`}
+            setHeaders: { Authorization: `Bearer ${token}` }
         });
       }
 
@@ -28,6 +29,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([
         customInterceptorFn
-      ]))
+      ])), provideAnimationsAsync(), provideAnimationsAsync()
   ]
 };

@@ -9,11 +9,14 @@
 
   <nav>
     <a href="/">Home</a>
-    <a href="/seller">Products</a>
+    <a href="products">Products</a>
     <a href="brands">Brands</a>
     <a href="about-us">About Us</a>
     <a href="contact-us">Contact Us</a>
+    <a href="cart">Cart</a>
     <a *ngIf="!user" href="signin"><i class="icon">👤</i>Sign In</a>
+    
+    <a *ngIf="user && user?.role?.accessLevel === 10" href="register">Register Users</a>
     <span *ngIf="user" (click)="logout()" class="logout-button"><i class="icon">👤</i> Logout({{ user?.username }})</span>
   </nav>
 </header>

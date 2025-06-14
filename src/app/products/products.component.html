@@ -1,15 +1,15 @@
-
 <section class="products-page">
-    <h2 >Our Products</h2>
-  
-    <div class="product-grid">
-      <div class="product-card" *ngFor="let product of products">
-        <img [src]="product.image" alt="{{ product.name }}" />
-        <h3>{{ product.name }}</h3>
-        <p>LKR {{ product.price | number:'1.0-0' }}</p>
-        <span class="category">{{ product.category }}</span>
-        <button >Add to Cart</button>
-      </div>
+  <button *ngIf="user && user.role.accessLevel === 10" class="add-new-button" (click)="openDialog()">+ Add New Product</button>
+  <h2>Our Products</h2>
+
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of (products$ | async)">
+      <img [src]="product.imageUrl" alt="{{ product.name }}" />
+      <h3>{{ product.name }}</h3>
+      <p>LKR {{ product.price | number:'1.0-0' }}</p>
+      <p>LKR {{ product.description }}</p>
+      <span class="category">{{ product.category.name }}</span>
+      <button>Add to Cart</button>
     </div>
-  </section>
-  
+  </div>
+</section>

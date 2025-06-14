@@ -1,0 +1,24 @@
+<div class="supplier-management-container">
+    <h2>Manage Suppliers</h2>
+
+    <form [formGroup]="supplierManagementForm" (ngSubmit)="onSubmit()">
+
+        <input type="text" formControlName="Id" placeholder="ID" required />
+        <input type="text" formControlName="Name" placeholder="Supplier Name" required />
+        <input type="text" formControlName="Quantity" placeholder="Quantity" required email />
+        <input type="text" formControlName="Price per unit" placeholder="Price per Unit" required />
+        <input type="text" formControlName="Total Price" placeholder="Total Price" required />
+        <input type="text" formControlName="Description" placeholder="Description" required />
+
+        <button type="Add supllier">
+            Add Supplier
+        </button>
+
+        <button type="Edit supplier">
+            Edit Supllier
+        </button>
+
+        <button type="Remove supplier">
+            Remove supplier
+        </button>
+    </form>

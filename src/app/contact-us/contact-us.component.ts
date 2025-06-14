@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { InquiryService } from '../services/inquiry.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-us',
@@ -16,11 +17,12 @@ export class ContactUsComponent implements OnInit {
   contactUsForm: FormGroup;
   authService = inject(AuthService);
   inquiryService = inject(InquiryService);
+  router = inject(Router);
 
   constructor(private fb: FormBuilder) {
     
     this.contactUsForm = this.fb.group({
-      userId: ['', [Validators.required]],
+      userId: [''],
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       message: ['', [Validators.required]]
@@ -29,18 +31,18 @@ export class ContactUsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    debugger;
     const user: any = this.authService.getUser();
     this.contactUsForm.patchValue({userId: user?.id, name: user?.username, email: user?.email})
   }
 
   
   onSubmit() {
-debugger;
     if (this.contactUsForm.valid) {
       this.inquiryService.send(this.contactUsForm.value)
       .subscribe(result => {
         console.log(result);
+        alert('Inquiry sent successfully');
+        this.router.navigate(['contact-us']);
       });
     }
   }
