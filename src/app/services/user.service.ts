@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ConfigService } from './config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,12 +8,10 @@ import { inject, Injectable } from '@angular/core';
 export class UserService {
 
   httpClient = inject(HttpClient);
-  baseUrl = 'https://localhost:7256/api/user';
+  configService = inject(ConfigService);
   
-  constructor() { }
-
   addUser(data: any) {
-    return this.httpClient.post(`${this.baseUrl}/register`, data)
+    return this.httpClient.post(`${this.configService.getApiUrl()}/user/register`, data)
       .pipe();
   }
 }

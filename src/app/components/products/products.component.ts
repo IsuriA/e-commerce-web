@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProductManagementComponent } from '../product-management/product-management.component';
-import { ProductService } from '../services/product.service';
-import { AuthService } from '../services/auth/auth.service';
+import { ProductService } from '../../services/product.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

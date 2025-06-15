@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service';
-import { LookupService } from '../services/lookup.service';
+import { UserService } from '../../services/user.service';
+import { LookupService } from '../../services/lookup.service';
 import { MatSelectModule } from '@angular/material/select';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

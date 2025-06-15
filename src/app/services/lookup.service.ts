@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConfigService } from './config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +9,17 @@ import { Observable } from 'rxjs';
 export class LookupService {
 
   httpClient = inject(HttpClient);
-  baseUrl = 'https://localhost:7256/api/lookup';
+  configService = inject(ConfigService);
   
   constructor() { }
 
   getProductCategories() : Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.baseUrl}/productCategories`)
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`)
       .pipe();
   }
 
   getRoles() : Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.baseUrl}/roles`)
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup'/roles`)
       .pipe();
   }
 }

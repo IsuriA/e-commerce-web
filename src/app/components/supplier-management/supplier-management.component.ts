@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProductService } from '../services/product.service';
-import { UserService } from '../services/user.service';
+import { ProductService } from '../../services/product.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
