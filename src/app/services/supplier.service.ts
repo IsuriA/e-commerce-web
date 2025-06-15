@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ConfigService } from './config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,12 +8,10 @@ import { inject, Injectable } from '@angular/core';
 export class SupplierService {
 
   httpClient = inject(HttpClient);
-  baseUrl = 'https://localhost:7256/api/product';
-  
-  constructor() { }
+  configService = inject(ConfigService);
 
   addSupplier(data: any) {
-    return this.httpClient.post(`${this.baseUrl}`, data)
+    return this.httpClient.post(`${this.configService.getApiUrl()}/product`, data)
       .pipe();
   }
 }

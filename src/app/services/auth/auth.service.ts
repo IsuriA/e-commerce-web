@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { tap, BehaviorSubject, Observable } from 'rxjs';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +9,17 @@ import { tap, BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
 
   httpClient = inject(HttpClient);
-  baseUrl = 'https://localhost:7256/api/user';
+  configService = inject(ConfigService);
 
   private authUserSubject = new BehaviorSubject<any>(null);
   authUser$ = this.authUserSubject.asObservable();
 
   signup(data: any) {
-    return this.httpClient.post(`${this.baseUrl}/register`, data);
+    return this.httpClient.post(`${this.configService.getApiUrl()}/user/register`, data);
   }
 
   login(data: any) {
-    return this.httpClient.post(`${this.baseUrl}/authenticate`, data)
+    return this.httpClient.post(`${this.configService.getApiUrl()}/user/authenticate`, data)
       .pipe(tap((result: any) => {
         localStorage.setItem('authUser', JSON.stringify(result?.user));
         localStorage.setItem('authToken', result?.token);
@@ -37,7 +38,7 @@ export class AuthService {
 
   logout() {
     if (this.isLoggedIn()) {
-      this.httpClient.post(`${this.baseUrl}/logout`, {})
+      this.httpClient.post(`${this.configService.getApiUrl()}/user/logout`, {})
         .subscribe(result => localStorage.removeItem('authUser'));
     }
   }

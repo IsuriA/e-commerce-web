@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConfigService } from './config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,7 @@ import { Observable } from 'rxjs';
 export class ProductService {
 
   httpClient = inject(HttpClient);
-  baseUrl = 'https://localhost:7256/api/product';
-
-  constructor() { }
+  configService = inject(ConfigService);
 
   addProduct(data: any) {
     // const formData = new FormData();
@@ -22,12 +21,12 @@ export class ProductService {
     // formData.append('description', data.description);
     // formData.append('imageUrl', 'test');
     
-    return this.httpClient.post(`${this.baseUrl}`, data)
+    return this.httpClient.post(`${this.configService.getApiUrl()}/product`, data)
       .pipe();
   }
 
   getProducts(data: any): Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.baseUrl}`)
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/product`)
       .pipe();
   }
 }
