@@ -25,4 +25,9 @@ export class BrandsComponent {
     { name: '', logo: 'images/tcl.png' },
     { name: '', logo: 'images/jbl.png' }
   ];
+
 }
+
+
+
+
