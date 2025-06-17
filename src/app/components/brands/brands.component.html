@@ -3,10 +3,24 @@
     <h2 >Our Trusted Brands</h2>
   
     <div class="brands-grid">
-      <div class="brand-card" *ngFor="let brand of brands">
+      <div class="brand-card" *ngFor="let brand of (brands$ | async)" (click)="onSelect(brand)">
         <img [src]="brand.logo" [alt]="brand.name" />
         <p>{{ brand.name }}</p>
       </div>
     </div>
   </section>
-  
+
+<div *ngIf="selectedBrand">
+  <h3>Products under {{ selectedBrand | titlecase }}</h3>
+  <div *ngIf="products.length; else noResults">
+    <div class="product-card" *ngFor="let product of products">
+      <img [src]="product.imageUrl" alt="{{ product.name }}" />
+      <h4>{{ product.name }}</h4>
+      <p>{{ product.description }}</p>
+      <strong>Rs.{{ product.price }}</strong>
+    </div>
+  </div>
+  <ng-template #noResults>
+    <p>No products found for this brand.</p>
+  </ng-template>
+</div>

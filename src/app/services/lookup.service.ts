@@ -10,16 +10,19 @@ export class LookupService {
 
   httpClient = inject(HttpClient);
   configService = inject(ConfigService);
-  
-  constructor() { }
 
-  getProductCategories() : Observable<Array<any>> {
+  getProductCategories(): Observable<Array<any>> {
     return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`)
       .pipe();
   }
 
-  getRoles() : Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup'/roles`)
+  getRoles(): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/roles`)
+      .pipe();
+  }
+
+  getBrands(): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/brands`)
       .pipe();
   }
 }

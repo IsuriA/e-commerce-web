@@ -29,4 +29,9 @@ export class ProductService {
     return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/product`)
       .pipe();
   }
+
+  getProductsByBrand(brandId: number): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/product/brand/${brandId}`)
+      .pipe();
+  }
 }
