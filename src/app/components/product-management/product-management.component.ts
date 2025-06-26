@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { LookupService } from '../../services/lookup.service';
 
@@ -13,14 +13,15 @@ import { LookupService } from '../../services/lookup.service';
   styleUrls: ['./product-management.component.css'],
 })
 export class ProductManagementComponent implements OnInit {
-  productCategories: any[] = [];
-  selectedProductCategory: any;
+  productForm: FormGroup;
+  productService = inject(ProductService);
+  lookupService = inject(LookupService);
+  dialogRef = inject(MatDialogRef<ProductManagementComponent>)
+
+  productCategories$ = this.lookupService.getProductCategories();
+  brands$ = this.lookupService.getBrands();
 
   ngOnInit(): void {
-    this.lookupService.getProductCategories()
-      .subscribe(result => {
-        this.productCategories = result;
-      });
   }
 
   onFileChange(event: Event) {
@@ -28,34 +29,39 @@ export class ProductManagementComponent implements OnInit {
     if (!fileUploadelement || !fileUploadelement.files) {
       return;
     }
-    
-    const file = fileUploadelement.files[0]; // Here we use only the first file (single file)
-    this.ProductManagementForm.patchValue({ imageFile: file });
+
+    const files = fileUploadelement.files; // Here we use only the first file (single file)
+    this.productForm.patchValue({ imageFiles: files });
   }
 
-  ProductManagementForm: FormGroup;
-  ProductService = inject(ProductService);
-  lookupService = inject(LookupService);
-
   constructor(private fb: FormBuilder) {
-
-    this.ProductManagementForm = this.fb.group({
-      name: ['', [Validators.required]],
-      quantity: ['', [Validators.required]],
-      price: ['', [Validators.required]],
+    this.productForm = this.fb.group({
+      name: ['test', [Validators.required]],
+      quantity: ['4', [Validators.required]],
+      price: ['343', [Validators.required]],
       category: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      brand: ['', [Validators.required]],
+      description: ['test', [Validators.required]],
+      imageFiles: ['', [Validators.required]],
       imageUrl: ['']
     });
   }
 
-  addProduct() {
-    if (this.ProductManagementForm.valid) {
-      console.log('Produts Data:', this.ProductManagementForm.value);
-      this.ProductService.addProduct(this.ProductManagementForm.value)
-        .subscribe((result: any) => {
-          alert(result.message);
-        });
+  addProduct(event: Event) {
+    if (!this.productForm.valid) {
+      this.productForm.markAllAsTouched();
+      this.productForm.markAsDirty();
+
+      return;
     }
+
+    console.log('Produts Data:', this.productForm.value);
+    this.productService.addProduct(this.productForm.value)
+      .subscribe(data => {
+        this.dialogRef.close(data);
+      },
+        err => {
+          this.dialogRef.close();
+        });
   }
 }

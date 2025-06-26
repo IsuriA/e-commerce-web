@@ -5,6 +5,8 @@ import { ProductManagementComponent } from '../product-management/product-manage
 import { ProductService } from '../../services/product.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ConfigService } from '../../services/config/config.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-products',
@@ -16,6 +18,8 @@ export class ProductsComponent implements OnInit {
   productService = inject(ProductService);
   authService = inject(AuthService);
   router = inject(Router);
+  configService = inject(ConfigService);
+  snackBar = inject(MatSnackBar);
 
   user: any;
   products$ = this.productService.getProducts(null);
@@ -31,21 +35,23 @@ export class ProductsComponent implements OnInit {
       role: 'dialog',
       height: '100%',
       width: '800px',
+      maxHeight: '600px',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result !== undefined) {
-        location.reload();
-        // let currentUrl = this.router.url;
-        // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        //   this.router.navigate([currentUrl]);
-        // });
-        //alert('test dialog');
+      if (result) {
+        this.snackBar.open(result?.message, 'X', {
+          duration: 3000, // Optional duration in milliseconds
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          panelClass: 'notification-success',
+        });
+
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
       }
     });
-
-    
   }
 }

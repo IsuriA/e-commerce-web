@@ -17,4 +17,8 @@ export class ConfigService {
   getApiUrl() {
     return this.config.API_URL;
   }
+
+  getServerAssetsUrl() {
+    return this.config.SERVER_ASSETS;
+  }
 }

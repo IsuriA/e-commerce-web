@@ -1,10 +1,11 @@
 <section class="products-page">
-  <button *ngIf="user && user.role.accessLevel === 10" class="add-new-button" (click)="openDialog()">+ Add New Product</button>
+  <button *ngIf="user && user.role.accessLevel === 10" class="add-new-button" (click)="openDialog()">+ Add New
+    Product</button>
   <h2>Our Products</h2>
 
   <div class="product-grid">
     <div class="product-card" *ngFor="let product of (products$ | async)">
-      <img [src]="product.imageUrl" alt="{{ product.name }}" />
+      <img src="{{ configService.getServerAssetsUrl() }}/{{ product.imageUrl }}" alt="{{ product.name }}" />
       <h3>{{ product.name }}</h3>
       <p>LKR {{ product.price | number:'1.0-0' }}</p>
       <p>LKR {{ product.description }}</p>
