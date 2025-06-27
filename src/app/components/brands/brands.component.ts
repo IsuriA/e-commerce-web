@@ -4,6 +4,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { LookupService } from '../../services/lookup.service';
 import { Observable, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
+import { ConfigService } from '../../services/config/config.service';
 
 @Component({
   selector: 'app-brands',
@@ -14,6 +15,7 @@ import { ProductService } from '../../services/product.service';
 export class BrandsComponent implements OnInit {
   lookupService = inject(LookupService);
   productService = inject(ProductService);
+  configService = inject(ConfigService);
 
   brands$ = this.lookupService.getBrands();
   

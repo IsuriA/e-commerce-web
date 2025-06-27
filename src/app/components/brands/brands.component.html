@@ -3,7 +3,7 @@
 
   <div class="brands-grid">
     <div class="brand-card" *ngFor="let brand of (brands$ | async)" (click)="onSelect(brand)">
-      <img [src]="brand.logo" [alt]="brand.name" />
+      <img src="{{ configService.getServerAssetsUrl() }}/{{ brand.imageUrl }}" [alt]="brand.name" />
       <p>{{ brand.name }}</p>
     </div>
   </div>
@@ -13,7 +13,7 @@
     
     <div class="product-grid" *ngIf="products.length; else noResults">
       <div class="product-card" *ngFor="let product of products">
-        <img [src]="product.imageUrl" alt="{{ product.name }}" />
+        <img src="{{ configService.getServerAssetsUrl() }}/{{ product.imageUrl }}" alt="{{ product.name }}" />
         <h4>{{ product.name }}</h4>
         <p>{{ product.description }}</p>
         <strong>Rs.{{ product.price }}</strong>

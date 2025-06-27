@@ -1,4 +1,4 @@
 {
-    "API_URL": "http://localhost:5140/api",
-    "SERVER_ASSETS": "http://localhost:5140/assets"
+    "API_URL": "https://localhost:7256/api",
+    "SERVER_ASSETS": "https://localhost:7256/assets"
 }
