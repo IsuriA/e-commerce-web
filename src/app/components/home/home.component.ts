@@ -1,6 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../../services/product.service';
+import { LookupService } from '../../services/lookup.service';
+import { ConfigService } from '../../services/config/config.service';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +11,27 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  authService = inject(AuthService);
-  user: any;
+  lookupService = inject(LookupService);
+  productService = inject(ProductService);
+  configService = inject(ConfigService);
 
-  ngOnInit(): void {
-    this.user = this.authService.getUser();
+  category$ = this.lookupService.getCategory();
+
+  products: any[] = [];
+  user: any;
+  selectedCategory: any;
+
+   ngOnInit() {
+    //this.getAllProducts();
   }
+  onSelect(category: any) {
+    this.selectedCategory = category;
+    this.productService.getProductsByCategory(category.id)
+      .subscribe(result => {
+        this.products = result;
+      });
+  }
+
 }
+
+

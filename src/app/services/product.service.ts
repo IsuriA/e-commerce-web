@@ -7,6 +7,9 @@ import { ConfigService } from './config/config.service';
   providedIn: 'root'
 })
 export class ProductService {
+  getProductsByCategory(id: any) {
+    throw new Error('Method not implemented.');
+  }
 
   httpClient = inject(HttpClient);
   configService = inject(ConfigService);

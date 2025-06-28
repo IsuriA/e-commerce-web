@@ -3,27 +3,43 @@
   <p>Your one-stop solution for all electrical needs</p>
   <button>Shop Now</button>
 
-
-
   <div><a *ngIf="user && user?.role?.accessLevel === 10" href="supplier-management">Supplier Management</a></div>
 
   <div><a *ngIf="user && user?.role?.accessLevel === 10" href="debtors-followup">Debtors Followup Module</a></div>
-
-
 </section>
 
 
 <section class="features">
   <div class="feature-card">
-    <h3>Home Appliances</h3>
-    <p>Designed to make your life simpler</p>
+    <div class="feature-card" *ngFor="let category of (category$ | async)" (click)="onSelect(category)">
+      <img src="{{ configService.getServerAssetsUrl() }}/{{ category }}" [alt]="category.name" />
+      <p>{{ category.name }}</p>
+    </div>
+
+    <div *ngIf="selectedCategory">
+      <h2>Products by {{ selectedCategory.name | titlecase }}</h2>
+
+      <div class="product-grid" *ngIf="products.length; else noResults">
+        <div class="product-card" *ngFor="let product of products">
+          <img src="{{ configService.getServerAssetsUrl() }}/{{ product.imageUrl }}" alt="{{ product.name }}" />
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <strong>Rs.{{ product.price }}</strong>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+      <ng-template #noResults>
+        <p>No products found for this Category.</p>
+      </ng-template>
+    </div>
+
   </div>
-  <div class="feature-card">
+  <!-- <div class="feature-card">
     <h3>Kitchen Appliances</h3>
     <p>Cooking with joy</p>
   </div>
   <div class="feature-card">
     <h3>Mobile Devices & Accessories</h3>
     <p>Stay charged, Stay connected</p>
-  </div>
+  </div> -->
 </section>
