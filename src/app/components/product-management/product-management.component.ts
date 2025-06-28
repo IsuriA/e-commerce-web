@@ -36,12 +36,12 @@ export class ProductManagementComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
-      name: ['test', [Validators.required]],
-      quantity: ['4', [Validators.required]],
-      price: ['343', [Validators.required]],
+      name: ['', [Validators.required]],
+      quantity: ['', [Validators.required]],
+      price: ['', [Validators.required]],
       category: ['', [Validators.required]],
       brand: ['', [Validators.required]],
-      description: ['test', [Validators.required]],
+      description: ['', [Validators.required]],
       imageFiles: ['', [Validators.required]],
       imageUrl: ['']
     });
@@ -55,13 +55,10 @@ export class ProductManagementComponent implements OnInit {
       return;
     }
 
-    console.log('Produts Data:', this.productForm.value);
     this.productService.addProduct(this.productForm.value)
-      .subscribe(data => {
-        this.dialogRef.close(data);
-      },
-        err => {
-          this.dialogRef.close();
-        });
+      .subscribe({
+        next: value => this.dialogRef.close(value),
+        error: () => this.dialogRef.close(),
+      });
   }
 }
