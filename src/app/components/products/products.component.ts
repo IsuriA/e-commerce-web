@@ -42,7 +42,7 @@ export class ProductsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.snackBar.open(result?.message, 'X', {
-          duration: 3000, // Optional duration in milliseconds
+          duration: 2000, // Optional duration in milliseconds
           horizontalPosition: 'end',
           verticalPosition: 'top',
           panelClass: 'notification-success',
@@ -50,7 +50,7 @@ export class ProductsComponent implements OnInit {
 
         setTimeout(() => {
           location.reload();
-        }, 3000);
+        }, 2000);
       }
     });
   }

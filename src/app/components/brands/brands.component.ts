@@ -21,15 +21,14 @@ export class BrandsComponent implements OnInit {
   selectedBrand: any;
 
   ngOnInit() {
-    //this.getAllProducts();
   }
 
-  onSelect(brand: any){
+  onSelect(brand: any) {
     this.selectedBrand = brand;
     this.productService.getProductsByBrand(brand.id)
-    .subscribe(result => {
-      this.products = result;
-    });
+      .subscribe(result => {
+        this.products = result;
+      });
   }
 }
 

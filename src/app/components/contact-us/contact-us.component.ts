@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../services/auth/auth.service';
 import { InquiryService } from '../../services/inquiry.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact-us',
@@ -13,14 +14,15 @@ import { Router } from '@angular/router';
   styleUrl: './contact-us.component.css'
 })
 export class ContactUsComponent implements OnInit {
-  
+
   contactUsForm: FormGroup;
   authService = inject(AuthService);
   inquiryService = inject(InquiryService);
+  snackBar = inject(MatSnackBar);
   router = inject(Router);
 
   constructor(private fb: FormBuilder) {
-    
+
     this.contactUsForm = this.fb.group({
       userId: [''],
       name: ['', [Validators.required]],
@@ -32,18 +34,22 @@ export class ContactUsComponent implements OnInit {
 
   ngOnInit(): void {
     const user: any = this.authService.getUser();
-    this.contactUsForm.patchValue({userId: user?.id, name: user?.username, email: user?.email})
+    this.contactUsForm.patchValue({ userId: user?.id, name: user?.username, email: user?.email })
   }
 
-  
+
   onSubmit() {
     if (this.contactUsForm.valid) {
       this.inquiryService.send(this.contactUsForm.value)
-      .subscribe(result => {
-        console.log(result);
-        alert('Inquiry sent successfully');
-        this.router.navigate(['contact-us']);
-      });
+        .subscribe(result => {
+          this.snackBar.open('Inquiry sent successfully', 'X', {
+            duration: 2000, // Optional duration in milliseconds
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: 'notification-success',
+          });
+          this.contactUsForm.patchValue({ message: '' });
+        });
     }
   }
 }

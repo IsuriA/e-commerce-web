@@ -1,3 +1,10 @@
-.page-content {
-    min-height: 600px;
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Or 100% if you also set the height of the HTML and body */
+}
+
+app-footer {
+    margin-top: auto;
 }
