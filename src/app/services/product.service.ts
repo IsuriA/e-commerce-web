@@ -7,9 +7,6 @@ import { ConfigService } from './config/config.service';
   providedIn: 'root'
 })
 export class ProductService {
-  getProductsByCategory(id: any) {
-    throw new Error('Method not implemented.');
-  }
 
   httpClient = inject(HttpClient);
   configService = inject(ConfigService);
@@ -48,6 +45,11 @@ export class ProductService {
 
   getProductsByBrand(brandId: number): Observable<Array<any>> {
     return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/product/brand/${brandId}`)
+      .pipe();
+  }
+
+  getProductsByCategory(categoryId: number): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/product/category/${categoryId}`)
       .pipe();
   }
 }

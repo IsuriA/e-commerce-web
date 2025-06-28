@@ -28,4 +28,9 @@ export class LookupService {
     return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/brands`)
       .pipe();
   }
+
+  getCategories(): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`)
+      .pipe();
+  }
 }

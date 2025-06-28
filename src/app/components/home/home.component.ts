@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   productService = inject(ProductService);
   configService = inject(ConfigService);
 
-  category$ = this.lookupService.getCategory();
+  categories$ = this.lookupService.getCategories();
 
   products: any[] = [];
   user: any;
@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
    ngOnInit() {
     //this.getAllProducts();
   }
+
   onSelect(category: any) {
     this.selectedCategory = category;
     this.productService.getProductsByCategory(category.id)

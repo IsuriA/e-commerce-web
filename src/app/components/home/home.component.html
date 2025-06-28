@@ -10,36 +10,27 @@
 
 
 <section class="features">
-  <div class="feature-card">
-    <div class="feature-card" *ngFor="let category of (category$ | async)" (click)="onSelect(category)">
-      <img src="{{ configService.getServerAssetsUrl() }}/{{ category }}" [alt]="category.name" />
+    <div class="feature-card" *ngFor="let category of (categories$ | async)" (click)="onSelect(category)">
       <p>{{ category.name }}</p>
     </div>
+</section>
 
-    <div *ngIf="selectedCategory">
-      <h2>Products by {{ selectedCategory.name | titlecase }}</h2>
-
-      <div class="product-grid" *ngIf="products.length; else noResults">
-        <div class="product-card" *ngFor="let product of products">
-          <img src="{{ configService.getServerAssetsUrl() }}/{{ product.imageUrl }}" alt="{{ product.name }}" />
-          <h4>{{ product.name }}</h4>
-          <p>{{ product.description }}</p>
-          <strong>Rs.{{ product.price }}</strong>
-          <button>Add to Cart</button>
-        </div>
+<section>
+  <div *ngIf="selectedCategory">
+    <h2>Products by {{ selectedCategory.name | titlecase }}</h2>
+    
+    <div class="product-grid" *ngIf="products.length; else noResults">
+      <div class="product-card" *ngFor="let product of products">
+        <img src="{{ configService.getServerAssetsUrl() }}/{{ product.imageUrl }}" alt="{{ product.name }}" />
+        <h4>{{ product.name }}</h4>
+        <p>{{ product.description }}</p>
+        <p><strong>Rs.{{ product.price }}</strong></p>
+        <button>Add to Cart</button>
       </div>
-      <ng-template #noResults>
-        <p>No products found for this Category.</p>
-      </ng-template>
     </div>
-
+    
+    <ng-template #noResults>
+      <p>No products found for this brand.</p>
+    </ng-template>
   </div>
-  <!-- <div class="feature-card">
-    <h3>Kitchen Appliances</h3>
-    <p>Cooking with joy</p>
-  </div>
-  <div class="feature-card">
-    <h3>Mobile Devices & Accessories</h3>
-    <p>Stay charged, Stay connected</p>
-  </div> -->
 </section>
