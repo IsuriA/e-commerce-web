@@ -2,6 +2,7 @@ import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@ang
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +17,20 @@ export class HeaderComponent implements OnInit {
 
   user: any;
 
+  cartCount: number = 0;
+
+  constructor(private cartService: CartService) { }
+
+
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.authService.authUser$.subscribe(() => {
       this.user = this.authService.getUser();
     })
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
+
   }
 
   logout() {

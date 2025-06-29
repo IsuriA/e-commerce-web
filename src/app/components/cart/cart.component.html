@@ -12,7 +12,7 @@
           <div class="quantity-controls">
             <button (click)="decreaseQty(item)">−</button>
             <span>{{ item.quantity }}</span>
-            <button (click)="increaseQty(item)">+</button>
+            <button (click)="decreaseQty(item)">+</button>
           </div>
   
           <button class="remove" (click)="removeItem(item.id)">Remove</button>

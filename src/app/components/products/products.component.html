@@ -10,7 +10,7 @@
       <p>LKR {{ product.price | number:'1.0-0' }}</p>
       <p>LKR {{ product.description }}</p>
       <span class="category">{{ product.category.name }}</span>
-      <button>Add to Cart</button>
+      <button (click)="addToCart(product)">Add to Cart</button>
     </div>
   </div>
 </section>

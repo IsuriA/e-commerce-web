@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CartService } from '../../services/cart.service';
+
 
 @Component({
   selector: 'app-products',
@@ -14,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
+
 export class ProductsComponent implements OnInit {
   productService = inject(ProductService);
   authService = inject(AuthService);
@@ -23,6 +26,12 @@ export class ProductsComponent implements OnInit {
 
   user: any;
   products$ = this.productService.getProducts(null);
+
+  constructor(private cartService: CartService) { }
+
+  addToCart(product: any) {
+    this.cartService.addToCart(product);
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -42,7 +51,7 @@ export class ProductsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.snackBar.open(result?.message, 'X', {
-          duration: 2000, // Optional duration in milliseconds
+          duration: 2000, // duration in milliseconds
           horizontalPosition: 'end',
           verticalPosition: 'top',
           panelClass: 'notification-success',
