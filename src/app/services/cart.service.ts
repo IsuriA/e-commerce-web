@@ -1,39 +1,31 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { ConfigService } from './config/config.service';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems: any[] = [];
-  private cartCount = new BehaviorSubject<number>(0);
+  httpClient = inject(HttpClient);
+  configService = inject(ConfigService);
+  updateCartTrigger = new BehaviorSubject<boolean>(true);
 
-  cartCount$ = this.cartCount.asObservable();
+  getItemCountInCart(): Observable<number> {
+    return this.updateCartTrigger
+      .pipe(switchMap(
+        (update) => {
+          if (!update) {
+            return of(0);
+          }
 
-  constructor() {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-      this.cartItems = JSON.parse(storedCart);
-      this.cartCount.next(this.cartItems.length);
-    }
+          return this.httpClient
+            .get<number>(`${this.configService.getApiUrl()}/order/itemCount`);
+        }))
   }
 
-  addToCart(product: any) {
-    this.cartItems.push(product);
-    this.updateLocalStorage();
-  }
-
-  getCartItems(): any[] {
-    return this.cartItems;
-  }
-
-  clearCart() {
-    this.cartItems = [];
-    this.updateLocalStorage();
-  }
-
-  private updateLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(this.cartItems));
-    this.cartCount.next(this.cartItems.length);
+  addItemToOrder(productId: Number): Observable<any> {
+    return this.httpClient
+      .post(`${this.configService.getApiUrl()}/order/addToOrder/${productId}`, {});
   }
 }

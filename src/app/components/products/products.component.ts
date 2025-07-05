@@ -9,7 +9,6 @@ import { ConfigService } from '../../services/config/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartService } from '../../services/cart.service';
 
-
 @Component({
   selector: 'app-products',
   imports: [CommonModule, MatDialogModule],
@@ -23,15 +22,10 @@ export class ProductsComponent implements OnInit {
   router = inject(Router);
   configService = inject(ConfigService);
   snackBar = inject(MatSnackBar);
+  cartService = inject(CartService);
 
   user: any;
   products$ = this.productService.getProducts(null);
-
-  constructor(private cartService: CartService) { }
-
-  addToCart(product: any) {
-    this.cartService.addToCart(product);
-  }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -62,5 +56,14 @@ export class ProductsComponent implements OnInit {
         }, 2000);
       }
     });
+  }
+
+  addToCart(product: any) {
+    this.cartService.addItemToOrder(product.id)
+      .pipe()
+      .subscribe({
+        next: () => this.cartService.updateCartTrigger?.next(true),
+        error: (err) => console.log(err),
+      });
   }
 }

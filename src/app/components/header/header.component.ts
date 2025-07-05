@@ -1,36 +1,29 @@
-import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   standalone: true,
 })
 export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
+  cartService = inject(CartService);
   router = inject(Router);
 
   user: any;
-
-  cartCount: number = 0;
-
-  constructor(private cartService: CartService) { }
-
+  cartItemCount$ = this.cartService.getItemCountInCart();
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.authService.authUser$.subscribe(() => {
       this.user = this.authService.getUser();
-    })
-    this.cartService.cartCount$.subscribe(count => {
-      this.cartCount = count;
     });
-
   }
 
   logout() {

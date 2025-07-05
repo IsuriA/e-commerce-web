@@ -7,11 +7,8 @@ import { ConfigService } from './config/config.service';
   providedIn: 'root'
 })
 export class InquiryService {
-
   httpClient = inject(HttpClient);
   configService = inject(ConfigService);
-  
-  constructor() { }
 
   send(data: any) {
     return this.httpClient.post(`${this.configService.getApiUrl()}/inquiry`, data)

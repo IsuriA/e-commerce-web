@@ -8,16 +8,14 @@
   </div>
 
   <nav>
-    <a href="/">Home</a>
-    <a href="products">Products</a>
-    <a href="brands">Brands</a>
-    <a href="about-us">About Us</a>
-    <a href="contact-us">Contact Us</a>
-    <a routerLink="/cart">🛒 Cart ({{ cartCount }})</a>
-
-    <!-- <a *ngIf="user" href="cart">Cart</a> -->
-    <a *ngIf="!user" href="signin"><i class="icon">👤</i>Sign In</a>
-    <a *ngIf="user && user?.role?.accessLevel === 10" href="register">Register Users</a>
+    <a routerLink="/">Home</a>
+    <a routerLink="products">Products</a>
+    <a routerLink="brands">Brands</a>
+    <a routerLink="about-us">About Us</a>
+    <a routerLink="contact-us">Contact Us</a>
+    <a *ngIf="user" routerLink="cart">🛒 Cart({{ cartItemCount$ | async }})</a>
+    <a *ngIf="!user" routerLink="signin"><i class="icon">👤</i>Sign In</a>
+    <a *ngIf="user && user?.role?.accessLevel === 10" routerLink="register">Register Users</a>
     <span *ngIf="user" (click)="logout()" class="logout-button">
       <i class="icon">👤</i> Logout({{ user?.username }})
     </span>
