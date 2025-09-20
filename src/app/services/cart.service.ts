@@ -19,13 +19,34 @@ export class CartService {
             return of(0);
           }
 
+          let apiUrl = this.configService.getApiUrl();
+          if (!apiUrl) {
+            return this.configService.loadConfig()
+              .pipe(switchMap(() => {
+                apiUrl = this.configService.getApiUrl();
+
+                return this.httpClient
+                  .get<number>(`${apiUrl}/order/itemCount`);
+              }));
+          }
+
           return this.httpClient
-            .get<number>(`${this.configService.getApiUrl()}/order/itemCount`);
+            .get<number>(`${apiUrl}/order/itemCount`);
         }))
   }
 
   addItemToOrder(productId: Number): Observable<any> {
     return this.httpClient
       .post(`${this.configService.getApiUrl()}/order/addToOrder/${productId}`, {});
+  }
+
+  getCurrentOrder(): Observable<any> {
+    return this.httpClient
+      .get<any>(`${this.configService.getApiUrl()}/order/current`);
+  }
+  updateQuantity(productId:number, quantity:number):Observable<any> {
+    return this.httpClient
+    .post(`${this.configService.getApiUrl()}/order/updateQuantity/${productId}/${quantity}`,{});
+
   }
 }

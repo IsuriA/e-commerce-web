@@ -1,28 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { ConfigService } from '../../services/config/config.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
+  imports: [CommonModule]
 })
 export class CartComponent implements OnInit {
-removeItem(arg0: any) {
-throw new Error('Method not implemented.');
-}
-decreaseQty(_t6: any) {
-throw new Error('Method not implemented.');
-}
-  cartItems: any[] = [];
-
-  constructor(private cartService: CartService) {}
+  cartService = inject(CartService);
+  configService = inject(ConfigService);
+  order$: Observable<any> = this.cartService.getCurrentOrder();
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getCartItems();
   }
 
-  getTotal() {
-    return this.cartItems.reduce((sum, item) => sum + item.price, 0);
+  increaseQuantity(item: any) {
+    this.cartService.updateQuantity(item.product.id, 1).subscribe(res => {
+      item.quantity++;
+    });
+
+  }
+
+  decreaseQuantity(item: any) {
+    this.cartService.updateQuantity(item.product.id, -1).subscribe(res =>{
+    item.quantity--;
+    if(item.quantity===0){
+      item.splice
+    }
+    });
   }
 }
+
