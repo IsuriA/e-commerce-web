@@ -1,19 +1,11 @@
 <div class="debtor-container">
   <h2>Debtors Follow-up</h2>
 
-  <!-- Filter Section -->
   <div class="filters">
-    <input
-      type="text"
-      placeholder="Search by Debtor ID"
-      [(ngModel)]="filterDebtorId"
-      (input)="applyFilters()"
-    />
-    <input
-      type="date"
-      [(ngModel)]="filterDueDate"
-      (change)="applyFilters()"
-    />
+    <input type="text" placeholder="Search by Debtor ID" [(ngModel)]="filterDebtorId"/>
+     <!-- (input)="applyFilters()" /> -->
+    <input type="date" [(ngModel)]="filterDueDate" />
+     <!-- (change)="applyFilters()" /> -->
   </div>
 
   <!-- Table -->
@@ -29,22 +21,17 @@
         <th>Paid Amount</th>
         <th>Have to Pay</th>
       </tr>
-
-      
     </thead>
     <tbody>
-      <tr *ngFor="let debtor of filteredDebtors">
-        <td>{{ debtor.debtorId }}</td>
-        <td>{{ debtor.name }}</td>
-        <td>{{ debtor.purchaseDate | date }}</td>
-        <td>Rs. {{ debtor.totalAmount }}</td>
-        <td>Rs. {{ debtor.advancedPayment }}</td>
-        <td>{{ debtor.dueDate | date }}</td>
-        <td>Rs. {{ debtor.paidAmount }}</td>
-        <td>
-          Rs.
-          {{ debtor.totalAmount - debtor.advancedPayment - debtor.paidAmount }}
-        </td>
+      <tr  *ngFor="let order of (dueOrders$ | async)">
+        <td>{{ getPrefixedDebtorId(order.user.id) }}</td>
+        <td>{{ order.user.firstName }} {{ order.user.lastName }}</td>
+        <td>2025/02/09</td>
+        <td>Rs.255000</td>
+        <td>Rs.50000</td>
+        <td>2026/02/09</td>
+        <td>Rs.155000</td>
+        <td>Rs.100000</td>
       </tr>
     </tbody>
   </table>

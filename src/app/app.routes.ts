@@ -60,5 +60,8 @@ export const routes: Routes = [
         path: 'checkout',
         loadComponent: () => import('./components/checkout/checkout.component').then(mod => mod.CheckoutComponent)
     },
-    
+    {
+        path: 'debtor-followup',
+        loadComponent: () => import('./components/debtors-followup/debtors-followup.component').then(mod => mod.DebtorsFollowupComponent)
+    },
 ];

@@ -44,9 +44,9 @@ export class CartService {
     return this.httpClient
       .get<any>(`${this.configService.getApiUrl()}/order/current`);
   }
+
   updateQuantity(productId:number, quantity:number):Observable<any> {
     return this.httpClient
     .post(`${this.configService.getApiUrl()}/order/updateQuantity/${productId}/${quantity}`,{});
-
   }
 }

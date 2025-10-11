@@ -13,7 +13,8 @@
     <a routerLink="brands">Brands</a>
     <a routerLink="about-us">About Us</a>
     <a routerLink="contact-us">Contact Us</a>
-    <a *ngIf="user" routerLink="cart">🛒 Cart({{ cartItemCount$ | async }})</a>
+    <a *ngIf="user && user?.role?.accessLevel === 50" routerLink="debtor-followup">Debtor Follow-up</a>
+    <a *ngIf="user && user?.role?.accessLevel === 100" routerLink="cart">🛒 Cart({{ (cartItemCount$ | async) || 0 }})</a>
     <a *ngIf="!user" routerLink="signin"><i class="icon">👤</i>Sign In</a>
     <a *ngIf="user && user?.role?.accessLevel === 10" routerLink="register">Register Users</a>
     <span *ngIf="user" (click)="logout()" class="logout-button">

@@ -1,29 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, tap } from 'rxjs';
+import { CartService } from '../../services/cart.service';
+import { ConfigService } from '../../services/config/config.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css'],
-  imports:[CommonModule,FormsModule,ReactiveFormsModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class CheckoutComponent implements OnInit {
-  cartItems = [
-    { name: 'Switch', quantity: 2, price: 1200 },
-    { name: 'Bulb', quantity: 5, price: 200 }
-  ];
+
+  cartService = inject(CartService);
+  configService = inject(ConfigService);
+  order$: Observable<any> = this.cartService.getCurrentOrder().pipe(tap(console.log));
 
   checkoutForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      NIC:['',Validators.required],
+      NIC: ['', Validators.required],
       address: ['', Validators.required],
       instructions: [''],
       paymentMethod: ['storePickup', Validators.required]
@@ -35,5 +38,9 @@ export class CheckoutComponent implements OnInit {
       console.log('Order Submitted:', this.checkoutForm.value);
       alert('Order placed successfully!');
     }
+  }
+
+  getTotal(items: Array<any>): number {
+    return items.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
   }
 }

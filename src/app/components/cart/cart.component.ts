@@ -3,6 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../../services/config/config.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -14,6 +15,7 @@ export class CartComponent implements OnInit {
   cartService = inject(CartService);
   configService = inject(ConfigService);
   order$: Observable<any> = this.cartService.getCurrentOrder();
+  router: Router = inject(Router);
 
   ngOnInit(): void {
   }
@@ -26,12 +28,16 @@ export class CartComponent implements OnInit {
   }
 
   decreaseQuantity(item: any) {
-    this.cartService.updateQuantity(item.product.id, -1).subscribe(res =>{
-    item.quantity--;
-    if(item.quantity===0){
-      item.splice
-    }
+    this.cartService.updateQuantity(item.product.id, -1).subscribe(res => {
+      item.quantity--;
+      if (item.quantity === 0) {
+        item.splice
+      }
     });
+  }
+
+  proceedToCheckout() {
+    this.router.navigate(['checkout']);
   }
 }
 
