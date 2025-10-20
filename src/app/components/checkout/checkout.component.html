@@ -62,11 +62,11 @@
         <fieldset>
             <legend>Payment Method:</legend>
             <label><input type="radio" formControlName="paymentMethod" value="storePickup" /> Store Pickup</label>
-            <label><input type="radio" formControlName="paymentMethod" value="payhere" /> PayHere</label>
+            <label><input type="radio" formControlName="paymentMethod" value="paynow" /> Pay Now</label>
             <label><input type="radio" formControlName="paymentMethod" value="buyOnCredit" /> Buy on Credit</label>
         </fieldset>
 
-        <div *ngIf="checkoutForm.get('paymentMethod')?.value === 'payhere'" class="payhere-details">
+        <div *ngIf="checkoutForm.get('paymentMethod')?.value === 'paynow'" class="payhere-details">
             <h4>PayHere Payment Details</h4>
             <p>You will be redirected to PayHere for secure payment.</p>
             <p><strong>Accepted Methods:</strong> Visa, MasterCard, eZCash, LankaPay</p>

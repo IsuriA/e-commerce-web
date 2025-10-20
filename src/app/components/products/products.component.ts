@@ -61,9 +61,24 @@ export class ProductsComponent implements OnInit {
   addToCart(product: any) {
     this.cartService.addItemToOrder(product.id)
       .pipe()
-      .subscribe({
-        next: () => this.cartService.updateCartTrigger?.next(true),
-        error: (err) => console.log(err),
-      });
+      .subscribe(
+        data => {
+          this.snackBar.open('Item added to the the cart', 'Close', {
+            duration: 3000, // Optional duration in milliseconds
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: 'notification-success',
+          });
+          this.cartService.updateCartTrigger?.next(true)
+        },
+        err => {
+          this.snackBar.open(err.error.message, 'Close', {
+            duration: 3000, // Optional duration in milliseconds
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: 'notification-error',
+          });
+        }
+      );
   }
 }

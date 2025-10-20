@@ -1,7 +1,7 @@
 <section class="hero">
   <h1>Welcome to Tech Lanka</h1>
   <p>Your one-stop solution for all electrical needs</p>
-  <button>Shop Now</button>
+  <button routerLink="/products">Shop Now</button>
 
   <div><a *ngIf="user && user?.role?.accessLevel === 10" href="supplier-management">Supplier Management</a></div>
 
@@ -25,7 +25,7 @@
         <h4>{{ product.name }}</h4>
         <p>{{ product.description }}</p>
         <p><strong>Rs.{{ product.price }}</strong></p>
-        <button>Add to Cart</button>
+        <button (click)="addToCart(product)">Add to Cart</button>
       </div>
     </div>
     

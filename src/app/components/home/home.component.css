@@ -2,7 +2,7 @@
   background: url('/assets/electrical-bg.jpg') no-repeat center center/cover;
   color: rgb(135, 117, 76);
   text-align: center;
-  padding: 100px 20px;
+  padding: 20px 20px;
 }
 
 .hero h1 {
@@ -34,6 +34,7 @@
 }
 
 .feature-card {
+  cursor: pointer;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
