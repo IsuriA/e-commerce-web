@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { render } from 'creditcardpayments/creditcardpayments';
 import { Observable, tap } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { ConfigService } from '../../services/config/config.service';
@@ -12,12 +13,12 @@ import { ConfigService } from '../../services/config/config.service';
   imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class CheckoutComponent implements OnInit {
-
   cartService = inject(CartService);
   configService = inject(ConfigService);
-  order$: Observable<any> = this.cartService.getCurrentOrder().pipe(tap(console.log));
-
+  renderer = inject(Renderer2);
   checkoutForm!: FormGroup;
+  order: any;
+  orderTotal: number = 0;
 
   constructor(private fb: FormBuilder) { }
 
@@ -29,8 +30,22 @@ export class CheckoutComponent implements OnInit {
       NIC: ['', Validators.required],
       address: ['', Validators.required],
       instructions: [''],
-      paymentMethod: ['storePickup', Validators.required]
+      paymentMethod: ['storePickup', Validators.required],
     });
+
+    this.cartService.getCurrentOrder().pipe(tap(order => {
+      this.order = order;
+      this.orderTotal = this.getTotal(order?.items || []);
+
+      render({
+        id: '#payPalButtons',
+        currency: 'USD',
+        value: (this.orderTotal/300).toFixed(2),
+        onApprove: (details) => {
+          console.log(`details`, details);
+        },
+      });
+    })).subscribe();
   }
 
   submitOrder() {
@@ -41,6 +56,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   getTotal(items: Array<any>): number {
-    return items.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+    return items.length > 0 && items.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
   }
 }

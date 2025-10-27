@@ -1,30 +1,4 @@
 <div class="cart-container">
-    <h2>Your Cart</h2>
-
-    <table class="cart-table">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of (order$ | async).items">
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>Rs.{{ item.product.price }}</td>
-                <td>Rs.{{ item.quantity * item.product.price }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td style="text-align:right;"><strong>Total</strong></td>
-                <td>Rs.{{ getTotal((order$ | async).items) }}</td>
-            </tr>
-        </tbody>
-    </table>
 
     <h2>Checkout</h2>
 
@@ -66,35 +40,38 @@
             <label><input type="radio" formControlName="paymentMethod" value="buyOnCredit" /> Buy on Credit</label>
         </fieldset>
 
-        <div *ngIf="checkoutForm.get('paymentMethod')?.value === 'paynow'" class="payhere-details">
-            <h4>PayHere Payment Details</h4>
-            <p>You will be redirected to PayHere for secure payment.</p>
-            <p><strong>Accepted Methods:</strong> Visa, MasterCard, eZCash, LankaPay</p>
+        <div id="payPalButtons" [ngClass]="{
+                'paypal_hidden': checkoutForm.get('paymentMethod')?.value !== 'paynow'
+            }"></div>
 
-            <label>
-                Card Number:
-                <input type="text" formControlName="cardNumber" placeholder="" />
-            </label>
-
-            <label>
-                Cardholder Name:
-                <input type="text" formControlName="cardHolder" placeholder="" />
-            </label>
-
-            <label>
-                Expiry Date:
-                <input type="text" formControlName="expiry" placeholder="MM/YY" />
-            </label>
-
-            <label>
-                CVV:
-                <input type="text" formControlName="cvv" placeholder="123" />
-            </label>
-
-            <button class="checkout-btn">Pay</button>
-
-        </div>
-
-        <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
+        <button *ngIf="checkoutForm.get('paymentMethod')?.value !== 'paynow'" type="submit"
+            [disabled]="checkoutForm.invalid">Place Order</button>
     </form>
+
+    <h2>Order Summary</h2>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of order?.items || []">
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>Rs.{{ item.product.price | number : '1.2-2' }}</td>
+                <td>Rs.{{ item.quantity * item.product.price | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td style="text-align:right;"><strong>Total</strong></td>
+                <td>Rs.{{ orderTotal | number : '1.2-2' }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

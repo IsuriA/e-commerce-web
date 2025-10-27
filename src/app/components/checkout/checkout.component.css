@@ -13,7 +13,8 @@
   margin-bottom: 2rem;
 }
 
-.cart-table th, .cart-table td {
+.cart-table th,
+.cart-table td {
   padding: 0.8rem;
   text-align: left;
   border-bottom: 1px solid #ccc;
@@ -67,12 +68,22 @@ button:disabled {
 button:hover:not(:disabled) {
   background-color: #0056b3;
 }
+
 .checkout-btn {
-    padding: 12px 24px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+div#payPalButtons {
+  width: 90%;
+  margin: auto;
+}
+
+.paypal_hidden {
+  display: none;
+}
