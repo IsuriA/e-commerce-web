@@ -22,6 +22,10 @@ export class LoginComponent {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+    }
   }
 
   onSubmit() {

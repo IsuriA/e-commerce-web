@@ -14,7 +14,7 @@ import { ConfigService } from './services/config/config.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent implements OnInit {
-  title = 'e-commerce-web';
+  title = 'Tech Lanka';
   configService = inject(ConfigService);
 
   ngOnInit(): void {

@@ -7,30 +7,26 @@ import { ConfigService } from './config/config.service';
   providedIn: 'root'
 })
 export class LookupService {
-  getCategory() {
-    throw new Error('Method not implemented.');
-  }
-
   httpClient = inject(HttpClient);
   configService = inject(ConfigService);
 
   getProductCategories(): Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`)
-      .pipe();
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`);
   }
 
   getRoles(): Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/roles`)
-      .pipe();
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/roles`);
   }
 
   getBrands(): Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/brands`)
-      .pipe();
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/brands`);
   }
 
   getCategories(): Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`)
-      .pipe();
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/productCategories`);
+  }
+
+  getPaymentMethods(): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${this.configService.getApiUrl()}/lookup/paymentMethods`);
   }
 }

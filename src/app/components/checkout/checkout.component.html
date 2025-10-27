@@ -3,49 +3,51 @@
     <h2>Checkout</h2>
 
     <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()" class="checkout-form">
-        <label>
-            Receiver Name:
-            <input formControlName="name" type="text" />
-        </label>
 
-        <label>
-            Email:
-            <input formControlName="email" type="email" />
-        </label>
-
-        <label>
-            Phone Number:
-            <input formControlName="phone" type="tel" />
-        </label>
-
-        <label>
-            NIC Number:
-            <input formControlName="NIC" type="tel" />
-        </label>
-
-        <label>
-            Address:
-            <textarea formControlName="address"></textarea>
-        </label>
-
-        <label>
-            Special Instructions:
-            <textarea formControlName="instructions"></textarea>
-        </label>
 
         <fieldset>
             <legend>Payment Method:</legend>
-            <label><input type="radio" formControlName="paymentMethod" value="storePickup" /> Store Pickup</label>
-            <label><input type="radio" formControlName="paymentMethod" value="paynow" /> Pay Now</label>
-            <label><input type="radio" formControlName="paymentMethod" value="buyOnCredit" /> Buy on Credit</label>
+            <label *ngFor="let paymentMethod of (paymentMethods$ | async)"><input type="radio"
+                    formControlName="paymentMethod" [value]="paymentMethod.code" />{{ paymentMethod.name }}</label>
         </fieldset>
 
         <div id="payPalButtons" [ngClass]="{
-                'paypal_hidden': checkoutForm.get('paymentMethod')?.value !== 'paynow'
+                'paypal_hidden': checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'
             }"></div>
 
-        <button *ngIf="checkoutForm.get('paymentMethod')?.value !== 'paynow'" type="submit"
-            [disabled]="checkoutForm.invalid">Place Order</button>
+        <span *ngIf="checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'">
+            <label>
+                Receiver Name:
+                <input formControlName="name" type="text" />
+            </label>
+
+            <label>
+                Email:
+                <input formControlName="email" type="email" />
+            </label>
+
+            <label>
+                Phone Number:
+                <input formControlName="phone" type="tel" />
+            </label>
+
+            <label>
+                NIC Number:
+                <input formControlName="NIC" type="tel" />
+            </label>
+
+            <label>
+                Address:
+                <textarea formControlName="address"></textarea>
+            </label>
+
+            <label>
+                Special Instructions:
+                <textarea formControlName="instructions"></textarea>
+            </label>
+
+            <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
+        </span>
     </form>
 
     <h2>Order Summary</h2>

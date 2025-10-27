@@ -5,6 +5,7 @@ import { render } from 'creditcardpayments/creditcardpayments';
 import { Observable, tap } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { ConfigService } from '../../services/config/config.service';
+import { LookupService } from '../../services/lookup.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,12 +14,14 @@ import { ConfigService } from '../../services/config/config.service';
   imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class CheckoutComponent implements OnInit {
+  lookupService = inject(LookupService);
   cartService = inject(CartService);
   configService = inject(ConfigService);
   renderer = inject(Renderer2);
   checkoutForm!: FormGroup;
   order: any;
   orderTotal: number = 0;
+  paymentMethods$: Observable<Array<any>> = this.lookupService.getPaymentMethods();
 
   constructor(private fb: FormBuilder) { }
 
@@ -30,7 +33,7 @@ export class CheckoutComponent implements OnInit {
       NIC: ['', Validators.required],
       address: ['', Validators.required],
       instructions: [''],
-      paymentMethod: ['storePickup', Validators.required],
+      paymentMethod: ['PAY_NOW', Validators.required],
     });
 
     this.cartService.getCurrentOrder().pipe(tap(order => {

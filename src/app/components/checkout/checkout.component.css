@@ -44,6 +44,8 @@ fieldset {
   border: 1px solid #ddd;
   padding: 1rem;
   border-radius: 6px;
+  display: flex;
+  flex-direction: row;
 }
 
 fieldset legend {
@@ -86,4 +88,8 @@ div#payPalButtons {
 
 .paypal_hidden {
   display: none;
+}
+
+fieldset label {
+  margin-right: 50px;
 }
