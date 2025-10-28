@@ -18,7 +18,7 @@
     <a *ngIf="!user" routerLink="signin"><i class="icon">👤</i>Sign In</a>
     <a *ngIf="user && user?.role?.accessLevel === 10" routerLink="register">Register Users</a>
     <span *ngIf="user" (click)="logout()" class="logout-button">
-      <i class="icon">👤</i> Logout({{ user?.username }})
+      <i class="icon">👤</i> Logout({{ user?.role?.name }} - {{ user?.username }})
     </span>
   </nav>
 </header>

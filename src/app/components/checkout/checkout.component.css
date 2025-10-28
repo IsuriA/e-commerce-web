@@ -86,10 +86,29 @@ div#payPalButtons {
   margin: auto;
 }
 
-.paypal_hidden {
+.element_hidden {
   display: none;
 }
 
 fieldset label {
   margin-right: 50px;
+}
+
+button.btn-place-order {
+  margin-top: 10px;
+  float: right;
+  width: 30%;
+}
+
+/* Styling for invalid input fields */
+.ng-invalid.ng-touched {
+  border-color: red !important;
+  /* Highlight invalid fields with a red border */
+}
+
+/* Styling for error messages */
+.error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
 }

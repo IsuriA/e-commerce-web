@@ -3,8 +3,6 @@
     <h2>Checkout</h2>
 
     <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()" class="checkout-form">
-
-
         <fieldset>
             <legend>Payment Method:</legend>
             <label *ngFor="let paymentMethod of (paymentMethods$ | async)"><input type="radio"
@@ -12,41 +10,104 @@
         </fieldset>
 
         <div id="payPalButtons" [ngClass]="{
-                'paypal_hidden': checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'
+                'element_hidden': checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'
             }"></div>
 
         <span *ngIf="checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'">
-            <label>
+            <label for="name">
                 Receiver Name:
-                <input formControlName="name" type="text" />
+                <input id="name" formControlName="name" type="text" />
+
+                @if (checkoutForm.get('name')?.invalid && (checkoutForm.get('name')?.touched ||
+                checkoutForm.get('name')?.dirty)) {
+                <div class="error-message">
+                    @if (checkoutForm.get('name')?.hasError('required')) {
+                    Receiver name is required.
+                    }
+                </div>
+                }
             </label>
 
-            <label>
+            <label for="email">
                 Email:
-                <input formControlName="email" type="email" />
+                <input id="email" formControlName="email" type="email" />
+
+                @if (checkoutForm.get('email')?.invalid && (checkoutForm.get('email')?.touched ||
+                checkoutForm.get('email')?.dirty)) {
+                <div class="error-message">
+                    @if (checkoutForm.get('email')?.hasError('required') ||
+                    checkoutForm.get('email')?.hasError('email')) {
+                    Valid email is required.
+                    }
+                </div>
+                }
             </label>
 
-            <label>
+            <label for="phone">
                 Phone Number:
-                <input formControlName="phone" type="tel" />
+                <input id="phone" formControlName="phone" type="tel" />
+
+                @if (checkoutForm.get('phone')?.invalid && (checkoutForm.get('phone')?.touched ||
+                checkoutForm.get('phone')?.dirty)) {
+                <div class="error-message">
+                    @if (checkoutForm.get('phone')?.hasError('required')) {
+                    Valid phone number is required.
+                    }
+                </div>
+                }
             </label>
 
-            <label>
+            <label for="nic">
                 NIC Number:
-                <input formControlName="NIC" type="tel" />
+                <input id="nic" formControlName="NIC" type="tel" [required]="checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'" />
+
+                @if (checkoutForm.get('NIC')?.invalid && (checkoutForm.get('NIC')?.touched ||
+                checkoutForm.get('NIC')?.dirty)) {
+                <div class="error-message">
+                    @if (checkoutForm.get('NIC')?.hasError('required')) {
+                    NIC is required.
+                    }
+                </div>
+                }
             </label>
 
-            <label>
+            <label for="address">
                 Address:
-                <textarea formControlName="address"></textarea>
+                <textarea id="address" formControlName="address"></textarea>
+
+                @if (checkoutForm.get('address')?.invalid && (checkoutForm.get('address')?.touched ||
+                checkoutForm.get('address')?.dirty)) {
+                <div class="error-message">
+                    @if (checkoutForm.get('address')?.hasError('required')) {
+                    Address is required.
+                    }
+                </div>
+                }
             </label>
 
-            <label>
+            <label for="installments">
+                Installments (months):
+                <input id="installments" formControlName="installments" type="number" min="1" />
+
+                @if (checkoutForm.get('installments')?.invalid && (checkoutForm.get('installments')?.touched ||
+                checkoutForm.get('installments')?.dirty)) {
+                <div class="error-message">
+                    @if (checkoutForm.get('installments')?.hasError('required')) {
+                    NIC is required.
+                    }
+                    @if (checkoutForm.get('installments')?.hasError('min')) {
+                    At least 1 installment is required.
+                    }
+                </div>
+                }
+            </label>
+
+            <label for="instructions">
                 Special Instructions:
-                <textarea formControlName="instructions"></textarea>
+                <textarea id="instructions" formControlName="instructions"></textarea>
             </label>
 
-            <button type="submit" [disabled]="checkoutForm.invalid">Place Order</button>
+            <button type="submit" class="btn-place-order" [disabled]="checkoutForm.invalid">Place Order</button>
         </span>
     </form>
 

@@ -55,10 +55,9 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log('Registration Data:', this.registerForm.value);
       this.userService.addUser(this.registerForm.value).subscribe((result: any) => {
         alert(result.message);
-            this.router.navigate(['signin']);
+        this.router.navigate(['signin']);
       });
     }
   }
