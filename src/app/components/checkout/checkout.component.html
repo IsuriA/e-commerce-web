@@ -45,7 +45,8 @@
 
             <label for="phone">
                 Phone Number:
-                <input id="phone" formControlName="phone" type="tel" />
+                <input id="phone" formControlName="phone" type="tel"
+                    [required]="checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'" />
 
                 @if (checkoutForm.get('phone')?.invalid && (checkoutForm.get('phone')?.touched ||
                 checkoutForm.get('phone')?.dirty)) {
@@ -59,7 +60,8 @@
 
             <label for="nic">
                 NIC Number:
-                <input id="nic" formControlName="NIC" type="tel" [required]="checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'" />
+                <input id="nic" formControlName="NIC" type="tel"
+                    [required]="checkoutForm.get('paymentMethod')?.value !== 'PAY_NOW'" />
 
                 @if (checkoutForm.get('NIC')?.invalid && (checkoutForm.get('NIC')?.touched ||
                 checkoutForm.get('NIC')?.dirty)) {

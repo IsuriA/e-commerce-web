@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { render } from 'creditcardpayments/creditcardpayments';
 import { Observable, tap } from 'rxjs';
@@ -7,6 +7,8 @@ import { CartService } from '../../services/cart.service';
 import { ConfigService } from '../../services/config/config.service';
 import { LookupService } from '../../services/lookup.service';
 import { PaymentService } from '../../services/payment.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cart',
@@ -19,11 +21,12 @@ export class CheckoutComponent implements OnInit {
   cartService = inject(CartService);
   paymentService = inject(PaymentService);
   configService = inject(ConfigService);
-  renderer = inject(Renderer2);
+  router = inject(Router);
   checkoutForm!: FormGroup;
   order: any;
   orderTotal: number = 0;
   paymentMethods$: Observable<Array<any>> = this.lookupService.getPaymentMethods();
+  snackBar = inject(MatSnackBar)
 
   constructor(private fb: FormBuilder) { }
 
@@ -38,7 +41,7 @@ export class CheckoutComponent implements OnInit {
       orderId: ['', Validators.required],
       reference: [''],
       paymentMethod: ['PAY_NOW', Validators.required],
-      phone: ['', Validators.required],
+      phone: [''],
       total: [0],
     });
 
@@ -46,6 +49,10 @@ export class CheckoutComponent implements OnInit {
       this.order = order;
       this.orderTotal = this.getTotal(order?.items || []);
       this.checkoutForm.patchValue({ orderId: this.order.id });
+
+      if ((order?.items || []).length === 0) {
+        this.router.navigate(['/cart'])
+      }
 
       render({
         id: '#payPalButtons',
@@ -67,20 +74,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   getFullAddress(address: any) {
-    // address = {
-    //   "address_line_1": "620A Tampines Street 61",
-    //   "address_line_2": "address linnne 2",
-    //   "admin_area_2": "Angoda",
-    //   "postal_code": "10600",
-    //   "country_code": "LK"
-    // };
-
     let shippingAddress: string = '';
     const separator = ', ';
     shippingAddress += address.address_line_1;
     shippingAddress += separator;
-    shippingAddress += address.address_line_2;
-    shippingAddress += separator;
+    if (address.address_line_2) {
+      shippingAddress += address.address_line_2;
+      shippingAddress += separator;
+    }
+
     shippingAddress += address.admin_area_2;
     shippingAddress += separator;
     shippingAddress += address.postal_code;
@@ -90,11 +92,18 @@ export class CheckoutComponent implements OnInit {
 
   submitOrder() {
     if (this.checkoutForm.valid) {
-      console.log('Order Submitted:', this.checkoutForm.value);
-
       this.checkoutForm.patchValue({ total: this.orderTotal });
       this.paymentService.checkoutOrder(this.checkoutForm.value).subscribe((result: any) => {
-        alert(result.message);
+        this.snackBar.open(result.message, 'Close', {
+          duration: 3000, // Optional duration in milliseconds
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          panelClass: 'notification-success',
+        });
+        setTimeout(() => {
+          this.router.navigate([`order-status/${this.checkoutForm.value.orderId}`]);
+          this.cartService.updateCartTrigger.next(true);
+        }, 3000);
       });
     }
   }

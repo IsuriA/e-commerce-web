@@ -45,8 +45,13 @@ export class CartService {
       .get<any>(`${this.configService.getApiUrl()}/order/current`);
   }
 
-  updateQuantity(productId:number, quantity:number):Observable<any> {
+  GetOrderById(id: number): Observable<any> {
     return this.httpClient
-    .post(`${this.configService.getApiUrl()}/order/updateQuantity/${productId}/${quantity}`,{});
+      .get<any>(`${this.configService.getApiUrl()}/order/${id}`);
+  }
+
+  updateQuantity(productId: number, quantity: number): Observable<any> {
+    return this.httpClient
+      .post(`${this.configService.getApiUrl()}/order/updateQuantity/${productId}/${quantity}`, {});
   }
 }

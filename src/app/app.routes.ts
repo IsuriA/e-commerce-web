@@ -64,4 +64,8 @@ export const routes: Routes = [
         path: 'debtor-followup',
         loadComponent: () => import('./components/debtors-followup/debtors-followup.component').then(mod => mod.DebtorsFollowupComponent)
     },
+    {
+        path: 'order-status/:id',
+        loadComponent: () => import('./components/order-status/order-status.component').then(mod => mod.OrderStatusComponent)
+    },
 ];

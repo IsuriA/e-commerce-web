@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CartService } from '../../services/cart.service';
 import { ConfigService } from '../../services/config/config.service';
 import { Observable } from 'rxjs';
 import { DebtorFollowupService } from '../../services/debtor-followup.service';

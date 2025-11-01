@@ -1,0 +1,20 @@
+<section class="order-status-container" *ngIf="order$ | async as data">
+    <h2 *ngIf="data?.items.length > 0">Order Status: <span style="color: green;">{{ data.status.name }}</span></h2>
+
+    <div *ngIf="data?.items.length > 0; else emptyCart">
+        <div class="order-status-item" *ngFor="let item of data?.items">
+            <img src="{{ configService.getServerAssetsUrl() }}/{{ item.product.imageUrl }}"
+                alt="{{ item.product.name }}" />
+
+            <div class="order-status-info">
+                <h4>{{ item.product.name }}</h4>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>Unit Price: LKR {{ item.product.price }}</p>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #emptyCart>
+        <p>Unable to find the order with provided order id.</p>
+    </ng-template>
+</section>
