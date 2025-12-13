@@ -12,4 +12,8 @@ export class PaymentService {
   checkoutOrder(data: any) {
     return this.httpClient.post(`${this.configService.getApiUrl()}/order/checkout`, data);
   }
+
+  getPaymentInfo(orderId: number) {    
+    return this.httpClient.get(`${this.configService.getApiUrl()}/order/payment-info/${orderId}`);
+  }
 }

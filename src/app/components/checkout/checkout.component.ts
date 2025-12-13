@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { render } from 'creditcardpayments/creditcardpayments';
+import { render } from 'creditcardpayments/creditCardPayments';
 import { Observable, tap } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { ConfigService } from '../../services/config/config.service';

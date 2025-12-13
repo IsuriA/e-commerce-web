@@ -1,5 +1,6 @@
 <section class="order-status-container" *ngIf="order$ | async as data">
-    <h2 *ngIf="data?.items.length > 0">Order Status: <span style="color: green;">{{ data.status.name }}</span></h2>
+    <h2 *ngIf="data?.items.length > 0">Order({{ data.id }}) Status: <span style="color: green;">{{ data.status.name
+            }}</span></h2>
 
     <div *ngIf="data?.items.length > 0; else emptyCart">
         <div class="order-status-item" *ngFor="let item of data?.items">
@@ -7,10 +8,81 @@
                 alt="{{ item.product.name }}" />
 
             <div class="order-status-info">
-                <h4>{{ item.product.name }}</h4>
-                <p>Quantity: {{ item.quantity }}</p>
-                <p>Unit Price: LKR {{ item.product.price }}</p>
+                <div class="order-status-column">{{ item.product.name }}</div>
+                <div class="order-status-column-right"><strong>Qty:</strong> {{ item.quantity }}</div>
+                <div class="order-status-column-right"><strong>Unit Price (LKR):</strong> {{ item.product.price }}</div>
             </div>
+        </div>
+
+        <div class="order-status-item">
+            <div class="order-status-info">
+                <div class="order-status-column"></div>
+                <div class="order-status-column"></div>
+                <div class="order-status-column-right"><strong>Total (LKR)</strong></div>
+                <div class="order-status-column-right"><strong>{{getTotal(data?.items)}}</strong></div>
+            </div>
+        </div>
+
+        <div class="payment-info" *ngIf="payments$ | async as paymentList">
+            <h4 style="text-align: center;">Payment Information</h4>
+
+            <div class="order-status-item">
+                <div class="order-status-info">
+                    <div class="order-status-column-right" style="border-right: 1px solid;"><strong>Payment Method</strong></div>
+                    <div class="order-status-column">{{ paymentList[0].method.name }}</div>
+                </div>
+            </div>
+            <div class="order-status-item">
+                <div class="order-status-info">
+                    <div class="order-status-column-right" style="border-right: 1px solid;"><strong>Receiver</strong></div>
+                    <div class="order-status-column">{{ paymentList[0].shippingReceiver }}</div>
+                </div>
+            </div>
+            <div class="order-status-item">
+                <div class="order-status-info">
+                    <div class="order-status-column-right" style="border-right: 1px solid;"><strong>Email</strong></div>
+                    <div class="order-status-column">{{ paymentList[0].shippingEmail }}</div>
+                </div>
+            </div>
+            <div class="order-status-item">
+                <div class="order-status-info">
+                    <div class="order-status-column-right" style="border-right: 1px solid;"><strong>Phone</strong></div>
+                    <div class="order-status-column">{{ paymentList[0].shippingPhone }}</div>
+                </div>
+            </div>
+            <div class="order-status-item">
+                <div class="order-status-info">
+                    <div class="order-status-column-right" style="border-right: 1px solid;"><strong>NIC</strong></div>
+                    <div class="order-status-column">{{ paymentList[0].shippingReceiverNic }}</div>
+                </div>
+            </div>
+
+            <table class="payment-plan">
+                <thead>
+                    <tr>
+                        <!-- <th>Id</th> -->
+                        <th>Installment No</th>
+                        <th>Amount (LKR)</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <th>Due Date</th>
+                        <th>Payment Reference</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let payment of paymentList">
+                        <!-- <td>{{ payment.id }}</td> -->
+                        <td style="text-align: center;">{{ payment.installment }}</td>
+                        <td style="text-align: right;">{{ payment.amount | currency:'LKR' }}</td>
+                        <td style="text-align: center;">{{ payment.createdAt | date: 'yyy-MM-dd' }}</td>
+                        <td>{{ payment.createdUser }}</td>
+                        <td style="text-align: center;">{{ payment.dueDate | date: 'yyy-MM-dd' }}</td>
+                        <td>{{ payment.reference }}</td>
+                        <td style="text-align: center;">{{ payment.paymentDate | date: 'yyy-MM-dd'}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
