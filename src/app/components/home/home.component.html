@@ -1,36 +1,22 @@
 <section class="hero">
-  <h1>Welcome to Tech Lanka</h1>
-  <p>Your one-stop solution for all electrical needs</p>
-  <button routerLink="/products">Shop Now</button>
+  <div class="hero-content">
+    <h1>Welcome to Tech Lanka</h1>
+    <p>Your one-stop solution for all electrical needs</p>
+    <button routerLink="/products">Shop Now</button>
 
-  <div><a *ngIf="user && user?.role?.accessLevel === 10" href="supplier-management">Supplier Management</a></div>
-
-  <div><a *ngIf="user && user?.role?.accessLevel === 10" href="debtors-followup">Debtors Followup Module</a></div>
-</section>
-
-
-<section class="features">
-    <div class="feature-card" *ngFor="let category of (categories$ | async)" (click)="onSelect(category)">
-      <p>{{ category.name }}</p>
+    <div class="admin-links" *ngIf="user?.role?.accessLevel === 10">
+      <a routerLink="/supplier-management">Supplier Management</a>
+      <a routerLink="/debtors-followup">Debtors Followup Module</a>
     </div>
-</section>
+  </div>
 
-<section>
-  <div *ngIf="selectedCategory">
-    <h2>Products by {{ selectedCategory.name | titlecase }}</h2>
-    
-    <div class="product-grid" *ngIf="products.length; else noResults">
-      <div class="product-card" *ngFor="let product of products">
-        <img src="{{ configService.getServerAssetsUrl() }}/{{ product.imageUrl }}" alt="{{ product.name }}" />
-        <h4>{{ product.name }}</h4>
-        <p>{{ product.description }}</p>
-        <p><strong>Rs.{{ product.price }}</strong></p>
-        <button (click)="addToCart(product)">Add to Cart</button>
-      </div>
+  <!-- Image Slider -->
+  <div class="slider">
+    <div class="slides">
+      <img src="assets/images/category1.jpg" alt="Electrical Tools" />
+      <img src="assets/images/category2.jpg" alt="Lighting Solutions" />
+      <img src="assets/images/category3.jpg" alt="Wiring Accessories" />
     </div>
-    
-    <ng-template #noResults>
-      <p>No products found for this brand.</p>
-    </ng-template>
   </div>
 </section>
+  

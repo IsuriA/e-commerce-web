@@ -1,24 +1,71 @@
-<!-- Header -->
 <header class="navbar">
-  <div class="logo">⚡ Tech Lanka</div>
-
-  <div class="search-container">
-    <input type="text" placeholder="Search products..." />
-    <button class="search-btn">🔍</button>
+  <!-- Brand -->
+  <div class="navbar-left">
+    <div class="logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">Tech Lanka</span>
+    </div>
   </div>
 
-  <nav>
-    <a routerLink="/">Home</a>
-    <a routerLink="products">Products</a>
-    <a routerLink="brands">Brands</a>
-    <a routerLink="about-us">About Us</a>
-    <a routerLink="contact-us">Contact Us</a>
-    <a *ngIf="user && user?.role?.accessLevel === 50" routerLink="debtor-followup">Debtor Follow-up</a>
-    <a *ngIf="user && user?.role?.accessLevel === 100" routerLink="cart">🛒 Cart({{ (cartItemCount$ | async) || 0 }})</a>
-    <a *ngIf="!user" routerLink="signin"><i class="icon">👤</i>Sign In</a>
-    <a *ngIf="user && user?.role?.accessLevel === 10" routerLink="register">Register Users</a>
-    <span *ngIf="user" (click)="logout()" class="logout-button">
-      <i class="icon">👤</i> Logout({{ user?.role?.name }} - {{ user?.username }})
-    </span>
+  <!-- Search -->
+  <div class="navbar-center">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search products, brands..."
+        aria-label="Search products"
+      />
+      <button class="search-btn" aria-label="Search">
+        🔍
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar-right">
+    <a routerLink="/" routerLinkActive="active">Home</a> q
+    <a routerLink="products" routerLinkActive="active">Products</a>
+    <a routerLink="brands" routerLinkActive="active">Brands</a>
+    <a routerLink="about-us" routerLinkActive="active">About Us</a>
+    <a routerLink="contact-us" routerLinkActive="active">Contact Us</a>
+
+    <!-- Role-based links -->
+    <a
+      *ngIf="user?.role?.accessLevel === 50"
+      routerLink="debtor-followup"
+      routerLinkActive="active"
+      class="role-link"
+    >
+      Debtor Follow-up
+    </a>
+
+    <a
+      *ngIf="user?.role?.accessLevel === 100"
+      routerLink="cart"
+      routerLinkActive="active"
+      class="cart-link"
+    >
+      🛒 Cart
+      <span class="cart-badge">{{ (cartItemCount$ | async) || 0 }}</span>
+    </a>
+
+    <!-- Authentication -->
+    <a *ngIf="!user" routerLink="signin" class="auth-link">
+      👤 Sign In
+    </a>
+
+    <a
+      *ngIf="user?.role?.accessLevel === 10"
+      routerLink="register"
+      class="role-link"
+    >
+      Register Users
+    </a>
+
+    <!-- User dropdown (simplified) -->
+    <div *ngIf="user" class="user-info" (click)="logout()">
+      👤 {{ user.username }}
+      <span class="role">({{ user.role.name }})</span>
+    </div>
   </nav>
 </header>
