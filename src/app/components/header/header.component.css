@@ -1,66 +1,73 @@
 /* Navbar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4f3809;
-    color: white;
-    padding: 1rem 2rem;
-    flex-wrap: wrap;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  nav a {
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .icon {
-    margin-right: 5px;
-  }
-  
-  /* Search Bar */
-  .search-container {
-    display: flex;
-    align-items: center;
-    margin: 10px 20px;
-    flex-grow: 1;
-    max-width: 400px;
-  }
-  
-  .search-container input[type="text"] {
-    padding: 6px 10px;
-    width: 100%;
-    border: none;
-    border-radius: 5px 0 0 5px;
-    font-size: 1rem;
-  }
-  
-  .search-container .search-btn {
-    padding: 6px 12px;
-    background-color: #ffae00;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .logout-button {
-    cursor: pointer;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4f3809;
+  color: white;
+  padding: 1rem 2rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 20px;
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+.search-container input[type="text"] {
+  padding: 6px 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  font-size: 1rem;
+}
+
+.search-container .search-btn {
+  padding: 6px 12px;
+  background-color: #ffae00;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.logout-button {
+  cursor: pointer;
+}
+
+.user-dropdown-wrapper input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}

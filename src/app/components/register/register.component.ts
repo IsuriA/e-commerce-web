@@ -42,12 +42,13 @@ export class RegisterComponent implements OnInit {
       .subscribe(result => {
         const user = this.authService.getUser();
         if (user?.role?.accessLevel === 10) {
-          this.roles = result.filter(r => r.accessLevel === 30 || r.accessLevel === 50);
-          this.registerForm.patchValue({ role: this.roles[0] });
-          return;
+          this.roles = result.filter(r => r.accessLevel === 30);
+        } else if (user?.role?.accessLevel === 30) {
+          this.roles = result.filter(r => r.accessLevel === 50);
+        } else {
+          this.roles = result.filter(r => r.accessLevel === 100);
         }
 
-        this.roles = result.filter(r => r.accessLevel === 100);
         this.registerForm.patchValue({ role: this.roles[0] });
         this.roleControlEnabled = false;
       });

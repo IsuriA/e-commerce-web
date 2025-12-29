@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { tap, BehaviorSubject, Observable } from 'rxjs';
+import { tap, BehaviorSubject } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 
 @Injectable({
@@ -40,6 +40,7 @@ export class AuthService {
     if (this.isLoggedIn()) {
       this.httpClient.post(`${this.configService.getApiUrl()}/user/logout`, {})
         .subscribe(result => localStorage.removeItem('authUser'));
+      localStorage.clear();
     }
   }
 

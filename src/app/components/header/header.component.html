@@ -2,9 +2,14 @@
 <header class="navbar">
   <div class="logo">⚡ Tech Lanka</div>
 
-  <div class="search-container">
-    <input type="text" placeholder="Search products..." />
-    <button class="search-btn">🔍</button>
+  <div *ngIf="user && user?.role?.accessLevel === 50">
+    <div class="user-dropdown-wrapper" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+      <input matInput [formControl]="contextUserControl" [matAutocomplete]="auto" [matAutocompleteConnectedTo]="origin" />
+    </div>
+
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{getOptionDisplayName(option)}}</mat-option>
+    </mat-autocomplete>
   </div>
 
   <nav>
@@ -14,9 +19,10 @@
     <a routerLink="about-us">About Us</a>
     <a routerLink="contact-us">Contact Us</a>
     <a *ngIf="user && user?.role?.accessLevel === 50" routerLink="debtor-followup">Debtor Follow-up</a>
-    <a *ngIf="user && user?.role?.accessLevel === 100" routerLink="cart">🛒 Cart({{ (cartItemCount$ | async) || 0 }})</a>
+    <a *ngIf="user && (user?.role?.accessLevel === 100 || (user?.role?.accessLevel === 50 && typeof contextUserControl.value == 'object'))" routerLink="cart">🛒 Cart({{ (cartItemCount$ | async) || 0
+      }})</a>
     <a *ngIf="!user" routerLink="signin"><i class="icon">👤</i>Sign In</a>
-    <a *ngIf="user && user?.role?.accessLevel === 10" routerLink="register">Register Users</a>
+    <a *ngIf="user && canRegisterUser(user?.role?.accessLevel)" routerLink="register">Register Users</a>
     <span *ngIf="user" (click)="logout()" class="logout-button">
       <i class="icon">👤</i> Logout({{ user?.role?.name }} - {{ user?.username }})
     </span>

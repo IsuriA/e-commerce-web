@@ -37,6 +37,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([
       customInterceptorFn
-    ])), provideAnimationsAsync(), provideAnimationsAsync()
+    ])), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync('noop')
   ]
 };
