@@ -9,6 +9,8 @@ import { PaymentService } from '../../services/payment.service';
 import { MatIconModule } from '@angular/material/icon';
 import { UpdatePaymentInfoDialog } from './update-payment-info/update-payment-info.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-order-status',
@@ -23,6 +25,9 @@ export class OrderStatusComponent implements OnInit {
   paymentService = inject(PaymentService);
   route = inject(ActivatedRoute);
   dialog = inject(MatDialog);
+  snackBar = inject(MatSnackBar);
+  authService = inject(AuthService);
+
   order$: Observable<any> = this.route.paramMap
     .pipe(
       switchMap((params: ParamMap) => this.cartService.GetOrderById(Number(params.get('id')) ?? -1)),
@@ -31,19 +36,39 @@ export class OrderStatusComponent implements OnInit {
     .pipe(
       switchMap((params: ParamMap) => this.paymentService.getPaymentInfo(Number(params.get('id')) ?? -1)),
     );
+  authUser: any;
 
   ngOnInit(): void {
+    this.authUser = this.authService.getUser();
   }
 
   openPaymentDialog(payment: any) {
-    console.log(payment);
     const dialogRef = this.dialog.open(UpdatePaymentInfoDialog, {
-      width: '250px',
+      width: '400px',
       data: payment
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.paymentService.updatePaymentDetails(result).subscribe({
+        next: () => {
+          this.snackBar.open('Update successfull', 'Close', {
+            duration: 3000, // Optional duration in milliseconds
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: 'notification-success',
+          });
+        },
+        error: () => {
+          delete result.reference;
+          delete result.paymentDate;
+          this.snackBar.open('Update failed', 'Close', {
+            duration: 3000, // Optional duration in milliseconds
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: 'notification-error',
+          });
+        },
+      });
     });
   }
 

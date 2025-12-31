@@ -16,4 +16,8 @@ export class PaymentService {
   getPaymentInfo(orderId: number) {    
     return this.httpClient.get(`${this.configService.getApiUrl()}/order/payment-info/${orderId}`);
   }
+
+  updatePaymentDetails(payment: any) {
+    return this.httpClient.post(`${this.configService.getApiUrl()}/order/save-payment-details`, payment);
+  }
 }

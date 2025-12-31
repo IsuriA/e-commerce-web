@@ -60,26 +60,26 @@
             <table class="payment-plan">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th *ngIf="authUser && authUser?.role?.accessLevel === 50"></th>
                         <th>Installment No</th>
                         <th>Amount (LKR)</th>
                         <th>Created Date</th>
                         <th>Created By</th>
                         <th>Due Date</th>
                         <th>Payment Reference</th>
-                        <th>Payment Date</th>
+                        <th>Payment Date & Time</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let payment of paymentList">
-                        <td><mat-icon style="cursor: pointer;" aria-hidden="false" aria-label="Edit" (click)="openPaymentDialog(payment)">edit</mat-icon></td>
+                        <td *ngIf="authUser && authUser?.role?.accessLevel === 50"><mat-icon style="cursor: pointer;" aria-hidden="false" aria-label="Edit" (click)="openPaymentDialog(payment)">edit</mat-icon></td>
                         <td style="text-align: center;">{{ payment.installment }}</td>
                         <td style="text-align: right;">{{ payment.amount | currency:'LKR' }}</td>
                         <td style="text-align: center;">{{ payment.createdAt | date: 'yyy-MM-dd' }}</td>
                         <td>{{ payment.createdUser }}</td>
                         <td style="text-align: center;">{{ payment.dueDate | date: 'yyy-MM-dd' }}</td>
                         <td>{{ payment.reference }}</td>
-                        <td style="text-align: center;">{{ payment.paymentDate | date: 'yyy-MM-dd'}}</td>
+                        <td style="text-align: center;">{{ payment.paymentDate | date: 'yyy-MM-dd HH:mm:ss'}}</td>
                     </tr>
                 </tbody>
             </table>
