@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -19,8 +19,6 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './update-payment-info.component.css'
 })
 export class UpdatePaymentInfoDialog {
-  paymentRefControl = new FormControl('', [Validators.required]);
-  paymentDateControl = new FormControl('', [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<UpdatePaymentInfoDialog>,
@@ -30,5 +28,11 @@ export class UpdatePaymentInfoDialog {
     this.data.reference = undefined;
     this.data.paymentDate = undefined;
     this.dialogRef.close();
+  }
+
+  onSaveClick(): void {
+    if (this.data.reference && this.data.paymentDate) {
+      this.dialogRef.close(this.data);
+    }
   }
 }

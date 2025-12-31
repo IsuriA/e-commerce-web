@@ -2,24 +2,24 @@
 <div mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Payment Reference</mat-label>
-        <input matInput [(ngModel)]="data.reference" />
+        <input matInput [(ngModel)]="data.reference" required />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Payment Date</mat-label>
-        <input matInput [matDatepicker]="datepicker" [(ngModel)]="data.paymentDate">
+        <input matInput [matDatepicker]="datepicker" [(ngModel)]="data.paymentDate" required />
         <mat-datepicker #datepicker />
         <mat-datepicker-toggle [for]="datepicker" matSuffix />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Payment Time</mat-label>
-        <input matInput [matTimepicker]="timepicker" [(ngModel)]="data.paymentDate" [ngModelOptions]="{updateOn: 'blur'}">
+        <input matInput [matTimepicker]="timepicker" [(ngModel)]="data.paymentDate" [ngModelOptions]="{updateOn: 'blur'}" required />
         <mat-timepicker #timepicker />
         <mat-timepicker-toggle [for]="timepicker" matSuffix />
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    <button mat-button (click)="onSaveClick()" cdkFocusInitial>Save</button>
 </div>
