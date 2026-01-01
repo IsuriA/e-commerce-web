@@ -51,6 +51,7 @@ export class OrderStatusComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.paymentService.updatePaymentDetails(result).subscribe({
         next: () => {
+          result.createdUser = this.authUser.username;
           this.snackBar.open('Update successfull', 'Close', {
             duration: 3000, // Optional duration in milliseconds
             horizontalPosition: 'end',

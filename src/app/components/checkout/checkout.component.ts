@@ -43,6 +43,7 @@ export class CheckoutComponent implements OnInit {
       paymentMethod: ['PAY_NOW', Validators.required],
       phone: [''],
       total: [0],
+      customerId: [null],
     });
 
     this.cartService.getCurrentOrder().pipe(tap(order => {
@@ -92,7 +93,11 @@ export class CheckoutComponent implements OnInit {
 
   submitOrder() {
     if (this.checkoutForm.valid) {
-      this.checkoutForm.patchValue({ total: this.orderTotal });
+      const selectedCustomer: string | null = localStorage.getItem('customerInContext');
+      this.checkoutForm.patchValue({
+        customerId: selectedCustomer ? JSON.parse(selectedCustomer)?.id : null,
+        total: this.orderTotal
+      });
       this.paymentService.checkoutOrder(this.checkoutForm.value).subscribe((result: any) => {
         this.snackBar.open(result.message, 'Close', {
           duration: 3000, // Optional duration in milliseconds
